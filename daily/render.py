@@ -1,4 +1,5 @@
-"""Рисует карточки «Знак дня» из week.json в queue/ДАТА.png + queue/ДАТА.txt (подпись к посту).
+"""Рисует карточки «Знак дня» из week.json в queue/ДАТА.png + queue/ДАТА.txt (подпись к посту)
+и сторис 1080x1920 в queue/stories/ДАТА.png.
 Запуск: python3 render.py week.json"""
 import sys, json, html, pathlib, datetime as dt
 from playwright.sync_api import sync_playwright
@@ -60,14 +61,25 @@ body{{font-variant-numeric:lining-nums;width:1080px;height:1350px;background:var
 .og b{{display:block;font-size:18px;letter-spacing:.2em;color:var(--gold);font-weight:600;margin-bottom:4px}}
 .og p{{font-family:Cor;font-style:italic;font-size:33px;line-height:1.22;color:var(--em)}}
 .ft{{margin-top:auto;padding-top:10px;font-size:18px;letter-spacing:.18em;color:var(--muted)}}
+body.story{{height:1920px}}
+.story .card{{padding:140px 60px 120px}}
+.story .head{{flex-direction:column;gap:16px;margin-top:26px}}
+.story .hl{{text-align:center}}
+.story .ring{{width:270px;height:270px}}
+.story .date{{font-size:74px}} .story .name{{font-size:96px}} .story .mean{{font-size:34px}}
+.story .sky{{font-size:26px;margin-top:30px}}
+.story .txt{{font-size:28px;margin-top:22px}}
+.story .box{{margin-top:30px;padding:26px 34px}} .story .box p{{font-size:27px}} .story .box b{{font-size:20px}}
+.story .og{{margin-top:28px;padding:22px 30px}} .story .og p{{font-size:35px}} .story .og b{{font-size:20px}}
+.story .ft{{font-size:22px}}
 """
 
-def page(d):
+def page(d, story=False):
     date = dt.date.fromisoformat(d["date"])
     e = html.escape
-    return f"""<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body><div class="card">
+    return f"""<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body class="{'story' if story else ''}"><div class="card">
 <div class="top">ГОРОДСКАЯ МАГИЯ · РУНА ДНЯ</div>
-<div class="head"><div class="ring">{rune_svg(d['rune'], 190)}</div>
+<div class="head"><div class="ring">{rune_svg(d['rune'], 210 if story else 190)}</div>
 <div class="hl"><div class="date">{date.day} {MONTHS[date.month-1]}</div><div class="wd">{e(d['weekday'])}</div>
 <div class="name">{e(d['rune_name'])}</div><div class="mean">{e(d['rune_meaning'])}</div></div></div>
 <div class="sky">{e(d['sky'])}</div>
@@ -77,16 +89,23 @@ def page(d):
 <div class="ft">t.me/afitciy</div>
 </div></body></html>"""
 
+def shot(pg, d, story):
+    out = (Q / "stories") if story else Q
+    out.mkdir(exist_ok=True)
+    f = out / f"{d['date']}.html"; f.write_text(page(d, story), encoding="utf-8")
+    pg.goto(f"file://{f}"); pg.wait_for_timeout(300)
+    over = pg.evaluate("(()=>{const c=document.querySelector('.card');return c.scrollHeight-c.clientHeight})()")
+    if over > 2: print(f"ВНИМАНИЕ {d['date']}{' (сторис)' if story else ''}: текст не влезает на {over}px")
+    pg.screenshot(path=str(out / f"{d['date']}.png")); f.unlink()
+
 def main(path):
     days = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
     with sync_playwright() as p:
-        b = p.chromium.launch(); pg = b.new_page(viewport={"width":1080,"height":1350})
+        b = p.chromium.launch()
+        pg = b.new_page(viewport={"width":1080,"height":1350})
+        ps = b.new_page(viewport={"width":1080,"height":1920})
         for d in days:
-            f = Q / f"{d['date']}.html"; f.write_text(page(d), encoding="utf-8")
-            pg.goto(f"file://{f}"); pg.wait_for_timeout(300)
-            over = pg.evaluate("(()=>{const c=document.querySelector('.card');return c.scrollHeight-c.clientHeight})()")
-            if over > 2: print(f"ВНИМАНИЕ {d['date']}: текст не влезает на {over}px")
-            pg.screenshot(path=str(Q / f"{d['date']}.png")); f.unlink()
+            shot(pg, d, False); shot(ps, d, True)
             cap = d["caption"].strip()
             if len(cap) > 1024: print(f"ВНИМАНИЕ {d['date']}: подпись {len(cap)} символов, больше 1024")
             (Q / f"{d['date']}.txt").write_text(cap + "\n", encoding="utf-8")
