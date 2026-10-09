@@ -12,7 +12,8 @@
    finish (как завершить, до ~120), ogovor (оговор, до ~190), caption (до 1000 знаков).
 4. `python3 daily/render.py daily/week.json`. Рисует пост 1080x1350 в `queue/` и сторис 1080x1920 в `queue/stories/`. Если пишет «не влезает», сократить текст и перерисовать.
    Прошлые недели хранить в `daily/weeks/ГГГГ-ММ-ДД.json`.
-5. Посмотреть картинки, закоммитить `daily/queue/` и `daily/week.json`, запушить в main.
+5. Отправить Елене на согласование каждый день целиком: карточку И текст поста под ней (подпись). Только картинки не присылать.
+6. Посмотреть картинки, закоммитить `daily/queue/` и `daily/week.json`, запушить в main.
 
 ## Руны в render.py
 fehu, uruz, ansuz, kenaz, gebo, wunjo, jera, sowilo, teiwaz, berkana, laguz, inguz, dagaz, othala.
