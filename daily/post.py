@@ -1,6 +1,6 @@
 """Публикует карточку на сегодня (по Москве) в Telegram-канал.
 Нужны переменные окружения TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID (например @afitciy)."""
-import os, re, sys, json, html, pathlib, datetime as dt, urllib.request, uuid
+import os, re, sys, json, html, pathlib, datetime as dt, urllib.request, urllib.error, uuid
 
 HERE = pathlib.Path(__file__).resolve().parent
 LOG = HERE / "posted.log"
@@ -22,8 +22,11 @@ def call(method, fields, file=None):
         body += (f"--{b}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"{file.name}\"\r\n"
                  f"Content-Type: image/png\r\n\r\n").encode() + file.read_bytes() + f"\r\n--{b}--\r\n".encode()
         req = urllib.request.Request(url, data=body, headers={"Content-Type": f"multipart/form-data; boundary={b}"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        res = json.load(r)
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            res = json.load(r)
+    except urllib.error.HTTPError as e:
+        sys.exit(f"Telegram ответил ошибкой {e.code}: {e.read().decode(errors='replace')}")
     if not res.get("ok"):
         sys.exit(f"Telegram ответил ошибкой: {res}")
 
