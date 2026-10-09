@@ -1,0 +1,29 @@
+name: Знак дня в Telegram
+
+on:
+  schedule:
+    - cron: "45 2 * * *"   # 05:45 по Москве; GitHub иногда запускает с опозданием на 10–20 минут
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-post
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Опубликовать карточку на сегодня
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
+        run: python3 daily/post.py
+      - name: Запомнить, что опубликовано
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add daily/posted.log || true
+          git diff --cached --quiet || (git commit -m "Опубликован знак дня" && git push)
