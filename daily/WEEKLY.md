@@ -57,3 +57,9 @@ fehu, uruz, ansuz, kenaz, gebo, wunjo, jera, sowilo, teiwaz, berkana, laguz, ing
 - В 2–3 подписях из 7 мягкий призыв: Чарование, работа с денежным каналом, диагностика, сессии,
   «Сила твоей свечи», «Золотой Телец». Цены и прайс: https://emokrova716-web.github.io/afitciya_prais/
   Личные сообщения: t.me/afitciya_magic.
+
+## Сторис в Instagram (@afitciya_magic)
+После пуша сторис из `daily/queue/stories/ДАТА.png` ставятся в Metricool (бренд afitciya_magic, blogId 6821702)
+как Instagram STORY на 06:00 по Москве, без текста, картинка по ссылке
+`https://raw.githubusercontent.com/emokrova716-web/afitciya_prais/main/daily/queue/stories/ДАТА.png`.
+Metricool копирует картинку к себе, поэтому если карточку переделали, сторис в Metricool нужно пересоздать.
