@@ -58,6 +58,9 @@ fehu, uruz, ansuz, kenaz, gebo, wunjo, jera, sowilo, teiwaz, berkana, laguz, ing
 - В 2–3 подписях из 7 мягкий призыв: Чарование, работа с денежным каналом, диагностика, сессии,
   «Сила твоей свечи», «Золотой Телец». Цены и прайс: https://emokrova716-web.github.io/afitciya_prais/
   Личные сообщения: t.me/afitciya_magic.
+- Приписку про Луну (https://emokrova716-web.github.io/luna/) и подписку на Max (https://max.ru/channel_afitciya_magic)
+  `daily/post.py` добавляет сам при публикации под каждый пост (3 варианта чередуются). В caption её не писать,
+  но в превью для Елены показывать. Caption вместе с припиской должен влезать в 1024 знака.
 
 ## Сторис в Instagram (@afitciya_magic)
 После пуша сторис из `daily/queue/stories/ДАТА.png` ставятся в Metricool (бренд afitciya_magic, blogId 6821702)

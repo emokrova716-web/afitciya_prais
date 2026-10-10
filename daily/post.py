@@ -7,6 +7,22 @@ LOG = HERE / "posted.log"
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
 CHAT = os.environ.get("TELEGRAM_CHAT_ID", "").strip() or "@afitciy"
 
+LUNA = "https://emokrova716-web.github.io/luna/"
+MAX = "https://max.ru/channel_afitciya_magic"
+# Приписка под каждым постом: Луна (практика на день) + подписка на Max.
+# Варианты чередуются по дате, чтобы не было одного и того же текста каждый день.
+FOOTERS = [
+    f'🌙 Хочешь сегодня сделать ещё что-то для себя? Загляни к Луне, там маленькая практика на этот день: <a href="{LUNA}">Луна, что скажешь?</a>\n'
+    f'А ещё я есть в Max, подписывайся, чтобы мы точно не потерялись: <a href="{MAX}">Городская магия в Max</a>',
+    f'🌙 Знак нарисован, а что ещё сделать сегодня для денег, любви или своего состояния, подскажет Луна: <a href="{LUNA}">спросить Луну</a>\n'
+    f'И подпишись на мой канал в Max, пусть магия будет под рукой и там: <a href="{MAX}">подписаться в Max</a>',
+    f'🌙 У Луны на сегодня тоже есть свой маленький ритуал, посмотри, он отлично дополнит знак: <a href="{LUNA}">Луна, что скажешь?</a>\n'
+    f'Я завела уголок в Max, приходи туда тоже, Красивая: <a href="{MAX}">Городская магия в Max</a>',
+]
+
+def footer(day):
+    return FOOTERS[dt.date.fromisoformat(day).toordinal() % len(FOOTERS)]
+
 def fmt(text):
     t = html.escape(text, quote=False)
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t)
@@ -42,11 +58,13 @@ def main():
     if not TOKEN:
         sys.exit("Не задан TELEGRAM_BOT_TOKEN")
     text = fmt(cap.read_text(encoding="utf-8").strip()) if cap.exists() else ""
-    if len(text) <= 1024:
+    text = (text + "\n\n" + footer(today)).strip()
+    # Лимит подписи в Telegram 1024 видимых символа (теги ссылок не считаются)
+    if len(html.unescape(re.sub(r"<[^>]+>", "", text))) <= 1024:
         call("sendPhoto", {"chat_id": CHAT, "caption": text, "parse_mode": "HTML"}, img)
     else:
         call("sendPhoto", {"chat_id": CHAT}, img)
-        call("sendMessage", {"chat_id": CHAT, "text": text, "parse_mode": "HTML"})
+        call("sendMessage", {"chat_id": CHAT, "text": text, "parse_mode": "HTML", "link_preview_options": {"is_disabled": True}})
     with LOG.open("a") as f: f.write(today + "\n")
     print("Опубликовано:", today)
 
