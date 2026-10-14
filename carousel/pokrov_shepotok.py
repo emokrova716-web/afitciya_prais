@@ -67,10 +67,11 @@ S = []
 
 # 1. Обложка
 S.append(frame(1, f"""
-<div class="h" style="position:absolute;left:64px;top:130px;font-size:118px;width:950px">Дорога<br><span class="mk">к любви</span></div>
-<div class="hand" style="position:absolute;left:64px;top:430px;font-size:44px;width:640px;line-height:1.22">в старину девушки в этот день<br>просили себе суженого.<br>а мы чем хуже? 😁</div>
-<div class="photo" style="left:420px;top:620px;width:560px;height:600px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
-<div class="hand" style="position:absolute;left:70px;top:770px;font-size:38px;width:310px;transform:rotate(-5deg)">сегодня, 14 октября, Покров. кому актуально, забирайте ♡</div>
+<div style="position:absolute;left:64px;top:120px;font-size:32px;letter-spacing:.08em;color:var(--muted)">14 октября, Покров</div>
+<div class="h" style="position:absolute;left:64px;top:168px;font-size:150px;width:950px">А мы<br>чем <span class="mk">хуже?</span></div>
+<div class="hand" style="position:absolute;left:64px;top:520px;font-size:42px;width:620px;line-height:1.22">в старину девушки в этот день<br>просили себе суженого 😁</div>
+<div class="photo" style="left:420px;top:680px;width:560px;height:560px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
+<div class="hand" style="position:absolute;left:70px;top:820px;font-size:36px;width:300px;transform:rotate(-5deg)">шепоток на привлечение любви, минута у окна ♡</div>
 {arrow(150, 970, 240, 150, "M10 10 C 40 85, 130 120, 230 100", "M208 80 L232 101 L206 120")}
 <div class="hand" style="position:absolute;left:70px;top:1150px;font-size:40px;color:var(--muted)">листай →</div>
 """))
