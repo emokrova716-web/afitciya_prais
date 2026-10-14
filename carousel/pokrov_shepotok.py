@@ -55,74 +55,92 @@ TICK = '<svg class="tick" viewBox="0 0 40 40" width="40" height="40"><path d="M6
 def arrow(x, y, w, h, d, head):
     return f'<svg class="a" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px" viewBox="0 0 {w} {h}"><path d="{d}"/><path d="{head}"/></svg>'
 
+N_TOTAL = 6
+
 def frame(n, body):
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body>{DEFS}
 <div class="top"><span>ГОРОДСКАЯ МАГИЯ</span><i></i><span>ШЕПОТОК НА ПОКРОВ</span></div>
 {body}
-<div class="bot"><span>0{n} / 04</span><i></i><span>@AFITCIYA_MAGIC</span></div></body></html>"""
+<div class="bot"><span>0{n} / 0{N_TOTAL}</span><i></i><span>@AFITCIYA_MAGIC</span></div></body></html>"""
 
 S = []
 
 # 1. Обложка
 S.append(frame(1, f"""
-<div class="h" style="position:absolute;left:64px;top:140px;font-size:128px;width:950px">Шепоток<br><span class="mk">на Покров</span></div>
-<div class="hand" style="position:absolute;left:64px;top:462px;font-size:44px;width:640px;line-height:1.2">«Покров-батюшка,<br>покрой землю снежком,<br>а меня, молоду, <span class="em">женишком</span>»</div>
+<div class="h" style="position:absolute;left:64px;top:130px;font-size:118px;width:950px">Дорога<br><span class="mk">к любви</span></div>
+<div class="hand" style="position:absolute;left:64px;top:430px;font-size:44px;width:640px;line-height:1.22">в старину девушки в этот день<br>просили себе суженого.<br>а мы чем хуже? 😁</div>
 <div class="photo" style="left:420px;top:620px;width:560px;height:600px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
-<div class="hand" style="position:absolute;left:70px;top:770px;font-size:38px;width:310px;transform:rotate(-5deg)">так шептали у окна наши бабушки. я шепчу иначе ♡</div>
-{arrow(150, 940, 240, 160, "M10 10 C 40 90, 130 130, 230 110", "M208 90 L232 111 L206 130")}
+<div class="hand" style="position:absolute;left:70px;top:770px;font-size:38px;width:310px;transform:rotate(-5deg)">сегодня, 14 октября, Покров. кому актуально, забирайте ♡</div>
+{arrow(150, 970, 240, 150, "M10 10 C 40 85, 130 120, 230 100", "M208 80 L232 101 L206 120")}
 <div class="hand" style="position:absolute;left:70px;top:1150px;font-size:40px;color:var(--muted)">листай →</div>
 """))
 
 # 2. Как делать
 steps = [
     ("1", "Подойди к окну", "открой его или просто посмотри на небо"),
-    ("2", "Положи правую ладонь", "на сердце"),
+    ("2", "Положи правую ладонь", "на область сердца"),
     ("3", "Трижды произнеси шепоток", "текст на следующем слайде"),
-    ("4", "Закрой глаза на пару секунд", "и почувствуй, как в жизнь приходит тепло"),
 ]
 rows = "".join(
     f'<div class="li" style="align-items:center;margin-bottom:34px"><div class="num">{n}</div>'
-    f'<div><b style="font-size:37px">{t}</b><br><span style="color:var(--muted);font-size:29px">{s}</span></div></div>'
+    f'<div><b style="font-size:38px">{t}</b><br><span style="color:var(--muted);font-size:30px">{s}</span></div></div>'
     for n, t, s in steps
 )
 S.append(frame(2, f"""
 <div class="h" style="position:absolute;left:64px;top:130px;font-size:104px">Как <span class="ul">делать</span></div>
-<div style="position:absolute;left:64px;right:64px;top:360px">{rows}</div>
-<div class="hand em" style="position:absolute;left:64px;top:1130px;font-size:44px;width:950px">никаких сложных ритуалов, пять минут у окна</div>
+<div style="position:absolute;left:64px;right:64px;top:380px">{rows}</div>
+<div class="hand em" style="position:absolute;left:64px;top:1130px;font-size:44px;width:950px">небольшой шепоток на привлечение любви</div>
 """))
 
 # 3. Текст шепотка
 VERSE = (
-    "Покров-батюшка, укрой моё сердце<br>"
-    "от одиночества, как землю снегом.<br><br>"
-    "Не чужого прошу, а <b>своего</b>,<br>"
-    "кто мне по судьбе.<br><br>"
-    "Пусть наши дороги пересекутся,<br>"
-    "без обмана, по-честному.<br><br>"
-    "Как сказано, так и будет."
+    "Покров-батюшка, землю укрываешь,<br>"
+    "судьбу мою от одиночества оберегаешь.<br>"
+    "Молодца доброго, ладного<br>в жизнь свою привлекаешь.<br><br>"
+    "Не чужого прошу, не привязанного,<br>"
+    "а мне по судьбе добром предназначенного.<br><br>"
+    "Пусть дороги наши сплетутся,<br>"
+    "и сердца друг к другу потянутся.<br>"
+    "Без принуждения, без обмана,<br>"
+    "для любви <b>взаимной, светлой, желанной</b>.<br><br>"
+    "Как сказала, так тому и быть!"
 )
 S.append(frame(3, f"""
-<div class="h" style="position:absolute;left:64px;top:110px;font-size:92px">Текст <span class="mk">шепотка</span></div>
-<div class="card" style="position:absolute;left:64px;right:64px;top:290px;padding:56px 54px;text-align:center">
-<div class="verse">{VERSE}</div>
+<div class="h" style="position:absolute;left:64px;top:100px;font-size:84px">Текст <span class="mk">шепотка</span></div>
+<div class="card" style="position:absolute;left:64px;right:64px;top:260px;padding:46px 50px">
+<div class="verse" style="font-size:34px;line-height:1.42;text-align:center">{VERSE}</div>
 </div>
-<div class="hand" style="position:absolute;right:80px;top:1150px;font-size:42px;transform:rotate(-3deg)">можно своими словами, суть важнее точности</div>
 """))
 
-# 4. Если уже в паре + мягкий переход в канал
+# 4. Если уже в отношениях
 S.append(frame(4, f"""
 <img class="round" src="{ph('portret-tsss-sekret')}" style="left:700px;top:120px;width:300px;height:300px;object-position:50% 25%">
 <div class="hand" style="position:absolute;left:460px;top:420px;font-size:42px;transform:rotate(-6deg)">если ты уже в паре ♡</div>
 <div class="h" style="position:absolute;left:64px;top:140px;font-size:72px;width:620px">Если ты<br>уже в<br>отношениях</div>
-<div class="card" style="position:absolute;left:64px;right:64px;top:540px;padding:34px 34px 30px">
- <div style="font-size:30px;line-height:1.45;color:var(--muted);margin-bottom:16px">замени две строки:</div>
- <div class="verse" style="font-size:33px">«Пусть между нами тепло не угасает,<br>любовь и доверие день ото дня возрастают.<br>Пусть дороги наши вместе идут,<br>а сердца <b>согласие</b> берегут.»</div>
+<div style="position:absolute;left:64px;right:64px;top:560px;font-size:33px;color:var(--muted)">замени строки про встречу на:</div>
+<div class="card" style="position:absolute;left:64px;right:64px;top:640px;padding:44px 48px">
+ <div class="verse" style="font-size:36px;text-align:center">«Пусть между нами тепло не угасает,<br>любовь и доверие день ото дня расцветают.<br>Пусть дороги наши вместе идут,<br>а сердца <b>согласие</b> берегут.»</div>
 </div>
-<div style="position:absolute;left:64px;right:64px;top:970px;text-align:center">
- <div style="font-size:30px;color:var(--muted);line-height:1.4;width:880px;margin:0 auto">шепоток про дорогу к любви, а в чём твоя сила притяжения, уже знаешь?</div>
- <div style="font-size:34px;margin-top:18px">бесплатный тест ждёт по слову</div>
- <div class="h" style="font-size:140px;margin:6px 0"><span class="mk">ЧАРЫ</span></div>
- <div class="hand" style="font-size:34px;color:var(--muted)">напиши в личку ♡</div>
+<div class="hand" style="position:absolute;left:64px;top:1070px;font-size:40px;width:900px;transform:rotate(-1deg)">остальной шепоток и шаги те же, что на прошлых слайдах ♡</div>
+"""))
+
+# 5. После шепотка
+S.append(frame(5, f"""
+<div class="h" style="position:absolute;left:64px;top:130px;font-size:104px">После <span class="ul">шепотка</span></div>
+<div class="photo" style="left:620px;top:360px;width:390px;height:520px;transform:rotate(-3deg)"><div class="tape"></div><img src="{ph('altar-svechi-3')}" style="object-position:50% 35%"><div class="cap">и немного тишины</div></div>
+<div style="position:absolute;left:64px;top:400px;width:520px;font-size:36px;line-height:1.45">Закрой глаза и представь, как ты себя чувствуешь рядом с любимым человеком.</div>
+<div style="position:absolute;left:64px;top:760px;width:520px;font-size:30px;line-height:1.5;color:var(--muted)">Не обязательно представлять конкретного мужчину. Важнее почувствовать нежность, спокойствие, радость и взаимность.</div>
+"""))
+
+# 6. Сохрани и перешли
+S.append(frame(6, f"""
+<div class="h" style="position:absolute;left:64px;top:160px;font-size:132px;width:950px"><span class="mk">Сохрани</span>,<br>чтобы не потерять</div>
+<div class="hand em" style="position:absolute;left:64px;top:560px;font-size:56px;width:900px;line-height:1.2">и перешли подруге, сама знаешь кому пригодится 🤍</div>
+<div class="card" style="position:absolute;left:64px;right:64px;top:850px;padding:36px 40px;text-align:center">
+ <div style="font-size:30px;color:var(--muted);line-height:1.4">а если хочешь ещё узнать, в чём твоя сила притяжения</div>
+ <div style="font-size:34px;margin-top:10px">бесплатный тест по слову</div>
+ <div class="h" style="font-size:110px;margin:4px 0"><span class="mk">ЧАРЫ</span></div>
+ <div class="hand" style="font-size:30px;color:var(--muted)">напиши в личку</div>
 </div>
 """))
 
