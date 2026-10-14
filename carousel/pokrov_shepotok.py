@@ -66,9 +66,9 @@ S = []
 # 1. Обложка
 S.append(frame(1, f"""
 <div class="h" style="position:absolute;left:64px;top:140px;font-size:128px;width:950px">Шепоток<br><span class="mk">на Покров</span></div>
-<div style="position:absolute;left:64px;top:470px;font-size:42px;color:var(--muted);width:600px">простая практика на открытие дорог в любви</div>
-<div class="photo" style="left:420px;top:590px;width:560px;height:640px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
-<div class="hand" style="position:absolute;left:70px;top:680px;font-size:48px;width:320px;transform:rotate(-5deg)">три фразы шёпотом, пока варится кофе ♡</div>
+<div class="hand" style="position:absolute;left:64px;top:462px;font-size:50px;width:640px;line-height:1.14">«Покров, Покров,<br>покрой меня <span class="em">женихом</span>» 😏</div>
+<div class="photo" style="left:420px;top:600px;width:560px;height:620px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
+<div class="hand" style="position:absolute;left:70px;top:720px;font-size:40px;width:320px;transform:rotate(-5deg)">помнишь бабушкину присказку? я нашла ей применение ♡</div>
 {arrow(150, 870, 240, 190, "M10 10 C 40 110, 130 160, 230 140", "M208 120 L232 141 L206 160")}
 <div class="hand" style="position:absolute;left:70px;top:1150px;font-size:40px;color:var(--muted)">листай →</div>
 """))
