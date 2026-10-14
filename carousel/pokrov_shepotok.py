@@ -118,9 +118,11 @@ S.append(frame(4, f"""
  <div style="font-size:30px;line-height:1.45;color:var(--muted);margin-bottom:16px">замени две строки:</div>
  <div class="verse" style="font-size:33px">«Пусть между нами тепло не угасает,<br>любовь и доверие день ото дня возрастают.<br>Пусть дороги наши вместе идут,<br>а сердца <b>согласие</b> берегут.»</div>
 </div>
-<div style="position:absolute;left:64px;right:64px;top:1000px;text-align:center">
- <div style="font-size:34px;color:var(--muted);line-height:1.4">сохрани, пригодится ещё не раз</div>
- <div class="hand em" style="font-size:52px;margin-top:14px">такого у меня много в канале ♡</div>
+<div style="position:absolute;left:64px;right:64px;top:970px;text-align:center">
+ <div style="font-size:30px;color:var(--muted);line-height:1.4;width:880px;margin:0 auto">шепоток про дорогу к любви, а в чём твоя сила притяжения, уже знаешь?</div>
+ <div style="font-size:34px;margin-top:18px">бесплатный тест ждёт по слову</div>
+ <div class="h" style="font-size:140px;margin:6px 0"><span class="mk">ЧАРЫ</span></div>
+ <div class="hand" style="font-size:34px;color:var(--muted)">напиши в личку ♡</div>
 </div>
 """))
 
