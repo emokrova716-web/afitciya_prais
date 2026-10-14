@@ -66,10 +66,10 @@ S = []
 # 1. Обложка
 S.append(frame(1, f"""
 <div class="h" style="position:absolute;left:64px;top:140px;font-size:128px;width:950px">Шепоток<br><span class="mk">на Покров</span></div>
-<div class="hand" style="position:absolute;left:64px;top:462px;font-size:50px;width:640px;line-height:1.14">«Покров, Покров,<br>покрой меня <span class="em">женихом</span>» 😏</div>
-<div class="photo" style="left:420px;top:600px;width:560px;height:620px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
-<div class="hand" style="position:absolute;left:70px;top:720px;font-size:40px;width:320px;transform:rotate(-5deg)">помнишь бабушкину присказку? я нашла ей применение ♡</div>
-{arrow(150, 870, 240, 190, "M10 10 C 40 110, 130 160, 230 140", "M208 120 L232 141 L206 160")}
+<div class="hand" style="position:absolute;left:64px;top:462px;font-size:44px;width:640px;line-height:1.2">«Покров-батюшка,<br>покрой землю снежком,<br>а меня, молоду, <span class="em">женишком</span>»</div>
+<div class="photo" style="left:420px;top:620px;width:560px;height:600px;transform:rotate(3deg)"><div class="tape"></div><img src="{ph('portret-stena-1')}" style="object-position:50% 35%"><div class="cap">на рассвете, перед окном</div></div>
+<div class="hand" style="position:absolute;left:70px;top:770px;font-size:38px;width:310px;transform:rotate(-5deg)">так шептали у окна наши бабушки. я шепчу иначе ♡</div>
+{arrow(150, 940, 240, 160, "M10 10 C 40 90, 130 130, 230 110", "M208 90 L232 111 L206 130")}
 <div class="hand" style="position:absolute;left:70px;top:1150px;font-size:40px;color:var(--muted)">листай →</div>
 """))
 
@@ -93,15 +93,13 @@ S.append(frame(2, f"""
 
 # 3. Текст шепотка
 VERSE = (
-    "Покров-батюшка, землю укрываешь,<br>"
-    "сердце моё от одиночества оберегаешь.<br>"
-    "Не чужого прошу, не привязанного,<br>"
-    "а мне по судьбе <b>добром</b> предназначенного.<br><br>"
-    "Пусть дороги наши пересекутся,<br>"
-    "пусть сердца навстречу друг другу потянутся.<br>"
-    "Без принуждения, без обмана,<br>"
-    "для любви <b>взаимной, светлой, желанной</b>.<br><br>"
-    "Как сказано, так тому и быть."
+    "Покров-батюшка, укрой моё сердце<br>"
+    "от одиночества, как землю снегом.<br><br>"
+    "Не чужого прошу, а <b>своего</b>,<br>"
+    "кто мне по судьбе.<br><br>"
+    "Пусть наши дороги пересекутся,<br>"
+    "без обмана, по-честному.<br><br>"
+    "Как сказано, так и будет."
 )
 S.append(frame(3, f"""
 <div class="h" style="position:absolute;left:64px;top:110px;font-size:92px">Текст <span class="mk">шепотка</span></div>
@@ -111,7 +109,7 @@ S.append(frame(3, f"""
 <div class="hand" style="position:absolute;right:80px;top:1150px;font-size:42px;transform:rotate(-3deg)">можно своими словами, суть важнее точности</div>
 """))
 
-# 4. CTA
+# 4. Если уже в паре + мягкий переход в канал
 S.append(frame(4, f"""
 <img class="round" src="{ph('portret-tsss-sekret')}" style="left:700px;top:120px;width:300px;height:300px;object-position:50% 25%">
 <div class="hand" style="position:absolute;left:460px;top:420px;font-size:42px;transform:rotate(-6deg)">если ты уже в паре ♡</div>
@@ -121,9 +119,8 @@ S.append(frame(4, f"""
  <div class="verse" style="font-size:33px">«Пусть между нами тепло не угасает,<br>любовь и доверие день ото дня возрастают.<br>Пусть дороги наши вместе идут,<br>а сердца <b>согласие</b> берегут.»</div>
 </div>
 <div style="position:absolute;left:64px;right:64px;top:1000px;text-align:center">
- <div style="font-size:34px;color:var(--muted)">хочешь глубже, не только на один день —</div>
- <div style="font-size:36px">напиши в личку слово</div>
- <div class="h" style="font-size:140px;margin:6px 0"><span class="mk">ЧАРЫ</span></div>
+ <div style="font-size:34px;color:var(--muted);line-height:1.4">сохрани, пригодится ещё не раз</div>
+ <div class="hand em" style="font-size:52px;margin-top:14px">такого у меня много в канале ♡</div>
 </div>
 """))
 
