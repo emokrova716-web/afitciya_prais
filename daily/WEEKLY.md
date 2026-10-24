@@ -82,3 +82,10 @@ render.py предупредит, если в такой день в текст�
 как Instagram STORY на 06:00 по Москве, без текста, картинка по ссылке
 `https://raw.githubusercontent.com/emokrova716-web/afitciya_prais/main/daily/queue/stories/ДАТА.png`.
 Metricool копирует картинку к себе, поэтому если карточку переделали, сторис в Metricool нужно пересоздать.
+
+## Разовые посты в Telegram (не Знак дня)
+Согласованные Еленой разовые посты лежат в `daily/promo/scheduled/<папка>/` (meta.json, текст, картинка).
+Публикует их отдельный workflow `promo-post.yml` через `daily/promo/post_scheduled.py`:
+раньше `telegram_at` ничего не уходит, после `telegram_until` пост не публикуется и запуск падает с ошибкой,
+опубликованное отмечается в `daily/promo/posted.log`. Запуск делает разовая задача Claude в нужное время.
+Знак дня, `daily-post.yml` и `daily/posted.log` этот процесс не трогает.

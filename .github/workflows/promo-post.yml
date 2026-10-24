@@ -1,0 +1,34 @@
+name: Разовые посты в Telegram
+
+# Запускается вручную или разовой задачей Claude в нужное время.
+# post_scheduled.py сам проверяет время: раньше telegram_at ничего не публикует,
+# повторно не публикует (daily/promo/posted.log). Знак дня (daily-post.yml) не затрагивается.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promo-post
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Опубликовать запланированные посты
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
+        run: python3 daily/promo/post_scheduled.py
+      - name: Запомнить, что опубликовано
+        if: always()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add daily/promo/posted.log || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Опубликован разовый пост"
+            git pull --rebase origin main && git push
+          fi
