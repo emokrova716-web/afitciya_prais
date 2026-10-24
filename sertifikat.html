@@ -137,6 +137,7 @@ const DISCOUNT    = 1500;                               // номинал сер
 const AMOUNT      = DISCOUNT + " ₽";
 const TG_URL      = "https://t.me/afitciya_magic";
 const VK_URL      = "https://vk.ru/afitciya_magic";
+const CONTACT_URL = "emokrova716-web.github.io/afitciya_prais/napisat.html";
 const MAX_URL     = "https://max.ru/u/f9LHodD0cOL7tMzFIJoG5S4MmnvI5tp1QSOM_nm3dd6mCFQ50wDsaXo625g";
 const VALID_DAYS_MONTHS = 1;                           // срок действия в месяцах
 const validUntil = (()=>{const t=new Date();const day=t.getDate();const v=new Date(t.getFullYear(),t.getMonth()+VALID_DAYS_MONTHS,1);const last=new Date(v.getFullYear(),v.getMonth()+1,0).getDate();v.setDate(Math.min(day,last));return v})();
@@ -230,7 +231,7 @@ function draw(){
 
 function updateMsg(){
   const to=val("toName");
-  document.getElementById("msgText").textContent=(to?to+", ":"")+"мне на Чаровании дали подарок для подруги, и я сразу подумала о тебе 🙂 Это сертификат на "+AMOUNT+" на первое Чарование, то есть ты можешь попробовать за "+(PRICE_FULL-DISCOUNT)+". Действует до "+VALID_DATE+".\n\nНапиши Елене, где тебе удобно, и пришли ей этот сертификат:\nTelegram: "+TG_URL.replace("https://","")+"\nВК: "+VK_URL.replace("https://","")+"\nMAX: "+MAX_URL;
+  document.getElementById("msgText").textContent=(to?to+", ":"")+"мне на Чаровании дали подарок для подруги, и я сразу подумала о тебе 🙂 Это сертификат на "+AMOUNT+" на первое Чарование, то есть ты можешь попробовать за "+(PRICE_FULL-DISCOUNT)+". Действует до "+VALID_DATE+".\n\nНапиши Елене, где тебе удобно, и пришли ей этот сертификат 👉 "+CONTACT_URL;
 }
 
 ["toName","fromName","wish"].forEach(id=>document.getElementById(id).addEventListener("input",draw));
