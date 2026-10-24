@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Сертификат на Чарование</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Marck+Script&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* Layout: one calm column; the certificate preview is the hero, the form sits beside it on wide screens and under it on phones. */
+:root{
+  --bg:#f5efe3;          /* кремовый */
+  --surface:#fffaf1;
+  --fg:#33393d;          /* мокрый асфальт */
+  --muted:#6d7166;
+  --emerald:#1f6b57;
+  --gold:#b08a3c;
+  --line:#e2d7c2;
+  --overlay:rgba(40,44,46,.55);
+  --font-display:"Forum","Times New Roman",serif;
+  --font-hand:"Marck Script","Segoe Script",cursive;
+  --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#2b3033;--surface:#353b3e;--fg:#ece5d8;--muted:#b3ad9f;--emerald:#6fc2a6;--gold:#d6b46a;--line:#4a5155;--overlay:rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#2b3033;--surface:#353b3e;--fg:#ece5d8;--muted:#b3ad9f;--emerald:#6fc2a6;--gold:#d6b46a;--line:#4a5155;--overlay:rgba(0,0,0,.6);color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55}
+.wrap{max-width:1040px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+header{display:grid;gap:6px}
+.brand{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0;color:var(--emerald);text-wrap:balance}
+.lead{margin:0;max-width:60ch;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+.preview{display:grid;gap:10px}
+.preview img{width:100%;max-width:100%;height:auto;border-radius:6px;box-shadow:0 10px 30px rgba(51,57,61,.18);display:block;background:#f5efe3}
+.hint{font-size:13px;color:var(--muted);margin:0}
+form{display:grid;gap:18px;min-width:0}
+.field{display:grid;gap:6px}
+label{font-weight:700;font-size:14px}
+.sub{font-weight:400;color:var(--muted)}
+input[type=text],textarea{font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;width:100%;box-sizing:border-box}
+textarea{resize:vertical;min-height:70px}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--emerald);outline-offset:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+button{font:inherit;font-weight:700;border-radius:999px;padding:12px 20px;cursor:pointer;border:1px solid var(--emerald)}
+.primary{background:var(--emerald);color:var(--surface)}
+.ghost{background:transparent;color:var(--emerald)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.status{font-size:14px;color:var(--emerald);min-height:1.4em;margin:0}
+.note{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px}
+.note h2{font-family:var(--font-display);font-weight:400;font-size:22px;margin:0;color:var(--emerald)}
+.msg{background:var(--surface);border:1px dashed var(--gold);border-radius:8px;padding:12px 14px;margin:0;white-space:pre-wrap;user-select:all}
+.fineprint{font-size:13px;color:var(--muted)}
+.fineprint a{color:var(--emerald)}
+
+/* consent modal */
+.modal{position:fixed;inset:0;background:var(--overlay);display:grid;place-items:center;z-index:50;padding-block:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.dialog{background:var(--surface);color:var(--fg);border-radius:12px;max-width:480px;width:100%;padding:24px;display:grid;gap:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:100%;overflow:auto;box-sizing:border-box}
+.dialog h2{font-family:var(--font-display);font-weight:400;font-size:26px;margin:0;color:var(--emerald)}
+.dialog p{margin:0}
+.check{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-weight:400;font-size:15px}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--emerald)}
+.dialog a{color:var(--emerald)}
+@media (prefers-reduced-motion:no-preference){.dialog{animation:rise .25s ease-out}@keyframes rise{from{transform:translateY(8px);opacity:.6}to{transform:none;opacity:1}}}
+[hidden]{display:none!important}body{margin:0}img{max-width:100%}
+</style>
+</head><body>
+
+<div class="modal" id="consent" role="dialog" aria-modal="true" aria-labelledby="consentTitle">
+  <div class="dialog">
+    <h2 id="consentTitle">Перед тем как оформить</h2>
+    <p>Здесь ты оформляешь подарочный сертификат на Чарование для подруги. Имена нужны только для того, чтобы вписать их в сертификат.</p>
+    <label class="check" for="agreeOffer"><input type="checkbox" id="agreeOffer"><span>Я ознакомилась с <a id="offerLink" href="#" target="_blank" rel="noopener">публичной офертой</a> и принимаю её условия</span></label>
+    <label class="check" for="agreeAge"><input type="checkbox" id="agreeAge"><span>Мне есть 18 лет</span></label>
+    <label class="check" for="agreeData"><input type="checkbox" id="agreeData"><span>Даю согласие на обработку персональных данных, указанных в сертификате</span></label>
+    <button class="primary" id="consentBtn" type="button" disabled>Продолжить</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <header>
+    <div class="brand">Городская магия · Elena Afitciya</div>
+    <h1>Подарок для подруги на Чарование</h1>
+    <p class="lead">Впиши своё имя и имя подруги. Сертификат соберётся сам, останется сохранить картинку и отправить ей.</p>
+  </header>
+
+  <div class="grid">
+    <section class="preview" aria-label="Сертификат">
+      <img id="certImg" alt="Подарочный сертификат на Чарование">
+      <p class="hint">На телефоне можно нажать на картинку и удерживать, чтобы сохранить её в галерею.</p>
+    </section>
+
+    <form id="form" autocomplete="off">
+      <div class="field">
+        <label for="toName">Имя подруги</label>
+        <input type="text" id="toName" maxlength="28" placeholder="Например, Марина">
+      </div>
+      <div class="field">
+        <label for="fromName">Твоё имя</label>
+        <input type="text" id="fromName" maxlength="28" placeholder="Например, Ольга">
+      </div>
+      <div class="field">
+        <label for="wish">Пожелание подруге <span class="sub">(можно не писать)</span></label>
+        <textarea id="wish" maxlength="90" placeholder="Например: чтобы глаза горели весь год"></textarea>
+      </div>
+      <div class="actions">
+        <button class="primary" type="submit" id="saveBtn">Сохранить сертификат</button>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+
+      <div class="note">
+        <h2>Что написать подруге</h2>
+        <p class="msg" id="msgText"></p>
+        <div class="actions"><button class="ghost" type="button" id="copyBtn">Скопировать текст</button></div>
+        <p class="fineprint">Подруга присылает картинку сертификата Елене, когда записывается на Чарование, туда, где ей удобно: <a href="https://t.me/afitciya_magic" target="_blank" rel="noopener">Telegram</a>, <a href="https://vk.ru/afitciya_magic" target="_blank" rel="noopener">ВК</a> или <a id="maxLink" href="#" target="_blank" rel="noopener">MAX</a>.</p>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/petrovich@0.2.1/dist/petrovich.min.js"></script>
+<script>
+/* ===== настройки, которые Елена может поменять ===== */
+const OFFER_URL   = "https://emokrova716-web.github.io/afitciya_prais/oferta.html";
+const PRICE_FULL  = 4000;                               // обычная цена Чарования
+const DISCOUNT    = 1500;                               // номинал сертификата
+const AMOUNT      = DISCOUNT + " ₽";
+const TG_URL      = "https://t.me/afitciya_magic";
+const VK_URL      = "https://vk.ru/afitciya_magic";
+const MAX_URL     = "https://max.ru/u/f9LHodD0cOL7tMzFIJoG5S4MmnvI5tp1QSOM_nm3dd6mCFQ50wDsaXo625g";
+const VALID_DAYS_MONTHS = 1;                           // срок действия в месяцах
+const validUntil = (()=>{const t=new Date();const day=t.getDate();const v=new Date(t.getFullYear(),t.getMonth()+VALID_DAYS_MONTHS,1);const last=new Date(v.getFullYear(),v.getMonth()+1,0).getDate();v.setDate(Math.min(day,last));return v})();
+const VALID_DATE  = validUntil.toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"}).replace(/\s*г\.?$/,"");
+const VALID_TEXT  = "Действует до " + VALID_DATE;
+const CONDITIONS  = "На первую покупку Чарования · не суммируется с другими скидками · не обменивается на деньги";
+
+document.getElementById("offerLink").href = OFFER_URL;
+document.getElementById("maxLink").href = MAX_URL;
+
+/* имена: латинские буквы-двойники → кириллица, склонение */
+const LAT2CYR={A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",a:"а",c:"с",e:"е",o:"о",p:"р",x:"х",y:"у"};
+function cleanName(s){s=s.trim().replace(/\s+/g," ");if(/[а-яё]/i.test(s))s=s.replace(/[ABCEHKMOPTXaceopxy]/g,ch=>LAT2CYR[ch]);return s}
+function declineName(name,gcase){
+  if(!name||typeof window.petrovich!=="function"||!/^[А-ЯЁа-яё\- ]+$/.test(name))return null;
+  try{return name.split(" ").map(w=>window.petrovich({first:w,gender:"female"},gcase).first).join(" ")}catch(_){return null}
+}
+
+/* consent */
+const a1=document.getElementById("agreeOffer"), a2=document.getElementById("agreeData"), a3=document.getElementById("agreeAge"), cBtn=document.getElementById("consentBtn"), modal=document.getElementById("consent");
+function syncConsent(){cBtn.disabled=!(a1.checked&&a2.checked&&a3.checked)}
+[a1,a2,a3].forEach(el=>el.addEventListener("change",syncConsent));
+cBtn.addEventListener("click",()=>{modal.hidden=true;document.getElementById("toName").focus()});
+
+/* certificate number */
+const d=new Date();
+const certNo="ЧР-"+String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,5).toUpperCase();
+
+const W=1080,H=1350;
+const canvas=document.createElement("canvas");canvas.width=W;canvas.height=H;
+const ctx=canvas.getContext("2d");
+const img=document.getElementById("certImg");
+const C={cream:"#f5efe3",paper:"#fbf6ec",emerald:"#1f6b57",gold:"#b08a3c",goldLight:"#d9bf86",asphalt:"#3a3f44",muted:"#7a7a6e"};
+
+function val(id){return id==="wish"?document.getElementById(id).value.trim():cleanName(document.getElementById(id).value)}
+
+function wrapLines(text,maxW){
+  const words=text.split(/\s+/);const lines=[];let line="";
+  for(const w of words){const t=line?line+" "+w:w;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w}else line=t}
+  if(line)lines.push(line);return lines;
+}
+function fitFont(text,family,start,maxW){let s=start;do{ctx.font=s+"px "+family;s-=2}while(ctx.measureText(text).width>maxW&&s>24);}
+
+function star(x,y,r){ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4;const rr=i%2?r*.32:r;ctx.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}ctx.closePath();ctx.fill()}
+function moon(x,y,r,bg){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();const f=ctx.fillStyle;ctx.fillStyle=bg;ctx.beginPath();ctx.arc(x+r*.42,y-r*.18,r*.86,0,Math.PI*2);ctx.fill();ctx.fillStyle=f}
+
+function draw(){
+  const to=val("toName"),from=val("fromName"),wish=val("wish");
+  ctx.fillStyle=C.cream;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=C.paper;ctx.fillRect(60,60,W-120,H-120);
+  ctx.strokeStyle=C.gold;ctx.lineWidth=3;ctx.strokeRect(60,60,W-120,H-120);
+  ctx.lineWidth=1.5;ctx.strokeRect(80,80,W-160,H-160);
+  ctx.fillStyle=C.gold;[[80,80],[W-80,80],[80,H-80],[W-80,H-80]].forEach(([x,y])=>star(x,y,16));
+
+  ctx.textAlign="center";ctx.textBaseline="alphabetic";
+  ctx.fillStyle=C.gold;ctx.font="700 26px Manrope, sans-serif";
+  ctx.letterSpacing="6px";ctx.fillText("ГОРОДСКАЯ МАГИЯ",W/2,190);ctx.letterSpacing="0px";
+
+  ctx.fillStyle=C.gold;moon(W/2,262,30,C.paper);
+
+  ctx.fillStyle=C.asphalt;ctx.font="40px Forum, serif";ctx.fillText("Подарочный сертификат",W/2,370);
+  ctx.fillStyle=C.emerald;ctx.font="150px Forum, serif";ctx.fillText("Чарование",W/2,510);
+
+  ctx.fillStyle=C.gold;ctx.font="96px Forum, serif";ctx.fillText(AMOUNT,W/2,650);
+  ctx.fillStyle=C.muted;ctx.font="500 28px Manrope, sans-serif";ctx.fillText("на первое Чарование",W/2,700);
+
+  ctx.strokeStyle=C.goldLight;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(W/2-220,750);ctx.lineTo(W/2+220,750);ctx.stroke();
+
+  const toD=declineName(to,"dative"), fromG=declineName(from,"genitive");
+  if(to&&from&&toD&&fromG){
+    ctx.fillStyle=C.emerald;fitFont(toD,"Marck Script, cursive",96,W-260);ctx.fillText(toD,W/2,870);
+    ctx.fillStyle=C.asphalt;fitFont("от "+fromG,"Marck Script, cursive",64,W-260);ctx.fillText("от "+fromG,W/2,960);
+  }else{
+    ctx.fillStyle=C.muted;ctx.font="500 26px Manrope, sans-serif";ctx.fillText("кому",W/2,800);
+    ctx.fillStyle=to?C.emerald:"#c9bfa9";fitFont(to||"имя подруги","Marck Script, cursive",88,W-260);ctx.fillText(to||"имя подруги",W/2,885);
+    ctx.fillStyle=C.muted;ctx.font="500 26px Manrope, sans-serif";ctx.fillText("от кого",W/2,935);
+    ctx.fillStyle=from?C.asphalt:"#c9bfa9";fitFont(from||"твоё имя","Marck Script, cursive",60,W-260);ctx.fillText(from||"твоё имя",W/2,1000);
+  }
+
+  let y=1065;
+  if(wish){ctx.fillStyle=C.emerald;ctx.font="italic 30px Forum, serif";const ls=wrapLines("«"+wish+"»",W-300).slice(0,2);ls.forEach(l=>{ctx.fillText(l,W/2,y);y+=40});}
+
+  ctx.fillStyle=C.asphalt;ctx.font="700 24px Manrope, sans-serif";ctx.fillText(VALID_TEXT,W/2,1168);
+  ctx.fillStyle=C.muted;ctx.font="400 19px Manrope, sans-serif";ctx.fillText(CONDITIONS,W/2,1200);
+  ctx.fillStyle=C.asphalt;ctx.font="500 20px Manrope, sans-serif";ctx.fillText("Напиши мне в Telegram, ВК или MAX: Elena Afitciya · t.me/afitciya_magic",W/2,1232);
+  ctx.fillStyle=C.muted;ctx.font="400 17px Manrope, sans-serif";ctx.fillText("№ "+certNo,W/2,1257);
+
+  img.src=canvas.toDataURL("image/png");
+  updateMsg();
+}
+
+function updateMsg(){
+  const to=val("toName");
+  document.getElementById("msgText").textContent=(to?to+", ":"")+"мне на Чаровании дали подарок для подруги, и я сразу подумала о тебе 🙂 Это сертификат на "+AMOUNT+" на первое Чарование, то есть ты можешь попробовать за "+(PRICE_FULL-DISCOUNT)+". Действует до "+VALID_DATE+".\n\nНапиши Елене, где тебе удобно, и пришли ей этот сертификат:\nTelegram: "+TG_URL.replace("https://","")+"\nВК: "+VK_URL.replace("https://","")+"\nMAX: "+MAX_URL;
+}
+
+["toName","fromName","wish"].forEach(id=>document.getElementById(id).addEventListener("input",draw));
+
+const statusEl=document.getElementById("status");
+let dl=null;
+document.getElementById("form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!val("toName")||!val("fromName")){statusEl.textContent="Впиши оба имени, и сертификат будет готов.";return}
+  draw();
+  const fname="Сертификат Чарование для "+val("toName")+".png";
+  if(dl){
+    canvas.toBlob(async blob=>{
+      try{await dl.save({filename:fname,data:blob});statusEl.textContent="Сертификат сохранён. Теперь отправь его подруге."}
+      catch(err){statusEl.textContent=err&&err.code==="declined"?"Сохранение отменено. Можно сохранить картинку долгим нажатием на неё.":"Не получилось сохранить файл здесь. Нажми на картинку и удерживай, чтобы сохранить её."}
+    },"image/png");
+  }else{
+    const a=document.createElement("a");a.href=img.src;a.download=fname;document.body.appendChild(a);a.click();a.remove();
+    statusEl.textContent="Если файл не скачался, нажми на картинку и удерживай, чтобы сохранить её.";
+  }
+});
+
+document.getElementById("copyBtn").addEventListener("click",()=>{
+  const t=document.getElementById("msgText").textContent;
+  const done=()=>{statusEl.textContent="Текст скопирован."};
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("msgText"));const s=getSelection();s.removeAllRanges();s.addRange(r);statusEl.textContent="Текст выделен, скопируй его."};
+  try{navigator.clipboard.writeText(t).then(done,fallback)}catch(_){fallback()}
+});
+
+/* fonts must be ready before drawing on canvas */
+draw();
+Promise.all([document.fonts.load("150px Forum"),document.fonts.load("88px 'Marck Script'"),document.fonts.load("700 26px Manrope"),document.fonts.load("500 26px Manrope")]).then(draw).catch(()=>{});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+
+(async()=>{try{if(window.claude&&window.claude.use){dl=await window.claude.use("downloads")}}catch(_){dl=null}})();
+</script>
+</body></html>
