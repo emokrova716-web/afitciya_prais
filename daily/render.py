@@ -76,16 +76,16 @@ body{{font-variant-numeric:lining-nums;width:1080px;height:1350px;background:var
 .og p{{font-family:Cor;font-style:italic;font-size:33px;line-height:1.22;color:var(--em)}}
 .ft{{margin-top:auto;padding-top:10px;font-size:18px;letter-spacing:.18em;color:var(--muted)}}
 body.story{{height:1920px}}
-.story .card{{padding:140px 60px 120px}}
-.story .head{{flex-direction:column;gap:16px;margin-top:26px}}
+.story .card{{padding:75px 170px 70px;justify-content:center}}
+.story .head{{flex-direction:column;gap:10px;margin-top:10px}}
 .story .hl{{text-align:center}}
-.story .ring{{width:270px;height:270px}}
-.story .date{{font-size:74px}} .story .name{{font-size:96px}} .story .mean{{font-size:34px}}
-.story .sky{{font-size:26px;margin-top:30px}}
-.story .txt{{font-size:28px;margin-top:22px}}
-.story .box{{margin-top:30px;padding:26px 34px}} .story .box p{{font-size:27px}} .story .box b{{font-size:20px}}
-.story .og{{margin-top:28px;padding:22px 30px}} .story .og p{{font-size:35px}} .story .og b{{font-size:20px}}
-.story .ft{{font-size:22px}}
+.story .ring{{width:220px;height:220px}}
+.story .date{{font-size:66px}} .story .name{{font-size:84px}} .story .mean{{font-size:29px}}
+.story .sky{{font-size:24px;margin-top:20px}}
+.story .txt{{font-size:25px;line-height:1.36;margin-top:16px}}
+.story .box{{margin-top:22px;padding:20px 30px}} .story .box p{{font-size:24px;line-height:1.32}} .story .box b{{font-size:18px;margin:12px 0 3px}}
+.story .og{{margin-top:20px;padding:18px 26px}} .story .og p{{font-size:29px;line-height:1.16}} .story .og b{{font-size:18px}}
+.story .ft{{font-size:19px;margin-top:26px;padding-top:0}}
 """
 
 def page(d, story=False):
