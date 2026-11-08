@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Моё желание 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: одна колонка в ширину телефона, один вопрос на экран; кремовая бумага, глубокий синий и золото. Единая светлая тема по замыслу. */
+:root{
+  --cream:#F6F0E4; --paper:#FFFBF3; --ink:#1D2440; --blue:#23356E; --blue2:#3B569C; --blue-soft:#E5EAF6;
+  --gold:#B48A3A; --gold-soft:#EEDFB9; --muted:#676C80; --line:#E4D9C3; --danger:#9A3B35;
+  --f-display:"Prata","Georgia","Times New Roman",serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--cream);z-index:10}
+.app{max-width:560px;margin:0 auto;padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;color:var(--blue);text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,9vw,46px);line-height:1.05}
+h2{font-size:clamp(24px,6.4vw,30px);line-height:1.15}
+h3{font-size:20px;line-height:1.2}
+p{margin:0}
+ul{margin:0;padding-left:20px}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.stack{display:grid;gap:14px}
+.stack-lg{display:grid;gap:22px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px;min-height:40px}
+.link{background:none;border:0;padding:6px 0;color:var(--blue2);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.link.danger{color:var(--danger)}
+.hero{position:relative;border-radius:22px;padding:26px 22px 24px;background:radial-gradient(120% 90% at 85% 0%,#2F4787 0%,var(--blue) 55%,#192654 100%);color:#F7F0E2;overflow:hidden}
+.hero h1{color:#F7F0E2}
+.hero .eyebrow{color:var(--gold-soft)}
+.hero p{color:#DCE2F2;max-width:38ch}
+.stars{position:absolute;inset:0;pointer-events:none}
+.stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--gold-soft);opacity:.7}
+@media (prefers-reduced-motion:no-preference){.stars i{animation:tw 4s ease-in-out infinite}}
+@keyframes tw{50%{opacity:.15}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+.choice{display:block;width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font:inherit;color:var(--ink);cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.choice:hover{border-color:var(--gold);box-shadow:0 6px 18px rgba(35,53,110,.08)}
+.choice .t{font-family:var(--f-display);font-size:20px;color:var(--blue);display:block}
+.choice .d{color:var(--muted);font-size:14.5px;display:block;margin-top:4px}
+.badge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;background:var(--gold-soft);color:#6E521D;vertical-align:middle}
+.badge.blue{background:var(--blue-soft);color:var(--blue)}
+.roads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.road{display:flex;gap:10px;align-items:center;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px;font:inherit;color:var(--ink);cursor:pointer;min-height:58px}
+.road:hover{border-color:var(--gold)}
+.road .n{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font-weight:700;font-size:13px}
+.road .nm{font-family:var(--f-display);color:var(--blue);font-size:17px;line-height:1.2}
+.progress{height:6px;border-radius:999px;background:#E8DFCC;overflow:hidden}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue2),var(--gold));border-radius:999px;transition:width .3s}
+.qcount{font-size:13px;color:var(--muted);font-weight:600}
+.wishquote{border-left:3px solid var(--gold);padding:6px 12px;color:var(--blue);font-family:var(--f-display);font-size:17px;background:rgba(238,223,185,.35);border-radius:0 10px 10px 0}
+label.q{display:block;font-family:var(--f-display);font-size:clamp(22px,5.8vw,26px);line-height:1.22;color:var(--ink);text-wrap:balance}
+textarea,input[type=text]{width:100%;font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;resize:vertical}
+textarea{min-height:110px}
+textarea:focus,input:focus{outline:2px solid var(--blue2);outline-offset:1px;border-color:transparent}
+.voice{font-size:13px;color:var(--muted)}
+.chips{display:grid;gap:8px}
+.chip{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;cursor:pointer;color:var(--ink)}
+.chip .dot{width:18px;height:18px;border-radius:50%;border:2px solid #C6B892;flex:none}
+.chip.multi .dot{border-radius:5px}
+.chip.sel{border-color:var(--blue);background:#F7F4EC}
+.chip.sel .dot{border-color:var(--blue);background:radial-gradient(circle,var(--blue) 45%,transparent 50%)}
+.chip.multi.sel .dot{background:var(--blue)}
+.tips{display:grid;gap:8px}
+.tip{background:#F4EAD0;border-radius:12px;padding:10px 12px;font-size:14px}
+.preview{background:var(--paper);border:1px solid var(--gold);border-radius:16px;padding:14px 16px}
+.preview .lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.preview .ph{font-family:var(--f-display);font-size:19px;line-height:1.35;color:var(--blue)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:600;border-radius:999px;padding:13px 22px;cursor:pointer;border:1px solid var(--blue);background:var(--blue);color:#FFF8EC;min-height:48px}
+.btn:hover{background:#1A2A5C}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn.ghost:hover{background:var(--blue-soft)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.gold:hover{background:#9C7630}
+.btn.wide{width:100%}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.navrow{display:flex;gap:10px}
+.navrow .btn{flex:1}
+button:focus-visible,.chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.verdict{border-radius:20px;padding:20px;display:grid;gap:12px}
+.verdict.yes{background:linear-gradient(180deg,#EEF1FA,#F8F5EC);border:1px solid #C9D3EC}
+.verdict.maybe{background:#FBF4E2;border:1px solid var(--gold-soft)}
+.verdict.not{background:#F7EFEA;border:1px solid #E6D2C6}
+.verdict h2{font-size:clamp(22px,6vw,27px)}
+.result-card{background:var(--paper);border:1px solid var(--gold);border-radius:20px;padding:20px;position:relative}
+.result-card::after{content:"";position:absolute;inset:6px;border:1px solid var(--gold-soft);border-radius:15px;pointer-events:none}
+.result-card textarea{min-height:130px;font-family:var(--f-display);font-size:19px;line-height:1.4;color:var(--blue);position:relative;z-index:1}
+.confirmed{color:var(--blue);font-weight:600}
+.note{background:var(--blue-soft);border-radius:14px;padding:14px 16px}
+.storage{font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+.wheelimg{width:100%;max-width:100%;height:auto;display:block;border-radius:50%;box-shadow:0 10px 30px rgba(35,53,110,.12)}
+.entry{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:8px}
+.entry.filled{border-color:var(--gold)}
+.entry .head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.entry .ph{font-family:var(--f-display);color:var(--blue);font-size:17px;line-height:1.35}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-size:14.5px;z-index:40;max-width:calc(100% - 32px)}
+.modal{position:fixed;inset:0;background:rgba(20,26,50,.45);display:grid;place-items:center;z-index:30;padding:16px}
+.modal .box{background:var(--paper);border-radius:20px;padding:22px;max-width:420px;width:100%;display:grid;gap:14px;max-height:90vh;overflow:auto}
+.fade{animation:fade .28s ease-out}
+@keyframes fade{from{transform:translateY(6px)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+#printArea{display:none}
+@media print{
+  @page{margin:14mm}
+  body{background:#fff}
+  .app,.toast,.modal,body::before{display:none!important}
+  #printArea{display:block!important;color:#1D2440;font-family:var(--f-body)}
+  #printArea h1{font-family:var(--f-display);color:#23356E;font-size:28px;margin:0 0 4px}
+  #printArea .pa-sub{color:#B48A3A;letter-spacing:.12em;text-transform:uppercase;font-size:11px;margin-bottom:14px}
+  #printArea .pa-wish{font-family:var(--f-display);color:#23356E;font-size:22px;line-height:1.4;border:1px solid #B48A3A;border-radius:12px;padding:18px 20px;margin-bottom:12px}
+  #printArea img{width:100%;max-width:170mm;display:block;margin:0 auto 12px}
+  #printArea .pa-box{border:1px solid #D9C391;border-radius:10px;padding:10px 14px;margin-bottom:8px;break-inside:avoid}
+  #printArea .pa-box h3{font-family:var(--f-display);color:#23356E;margin:0 0 4px;font-size:15px}
+  #printArea .pa-box p{white-space:pre-wrap;margin:0;font-size:13px;line-height:1.45}
+  #printArea .pa-foot{margin-top:14px;font-size:11px;color:#676C80}
+  .pa-break{break-before:page}
+}
+</style>
+
+</head><body>
+<main class="app" id="app" aria-live="polite"></main>
+<div id="printArea"></div>
+
+<script>
+/* ================== 12 жизненных дорог «Ключей от 2027» ==================
+   Перечень и порядок переданы Еленой 06.11.2026. Подсказки и примеры ниже
+   написаны для этого инструмента и могут быть заменены на авторские. */
+const ROADS = [
+  {title:"Здоровье", wishEx:"хочу больше сил и бодрости",
+   why:"Зачем тебе это? Что ты будешь делать, когда сил и здоровья станет достаточно?",
+   resEx:"У меня достаточно сил на работу, прогулки и близких", measure:"Например: сплю по 8 часов, гуляю каждый день. Если цифры не нужны, пропусти.",
+   hint:"Пиши о самочувствии и привычках. Это желание, не медицинский план."},
+  {title:"Материальные блага", wishEx:"хочу больше денег",
+   why:"На что тебе эти деньги или вещи? Что они тебе дадут?",
+   resEx:"Мой доход составляет 500 000 рублей в месяц и выше", measure:"Сумма, вещь, жильё: то, что можно увидеть или посчитать.",
+   hint:"Здесь цифры уместны: сумма, срок, конкретная вещь."},
+  {title:"Карьера", wishEx:"хочу стать начальником отдела",
+   why:"Зачем тебе эта должность или работа? Что она тебе даст: доход, уважение, интересные задачи, влияние?",
+   resEx:"Я руковожу отделом из шести человек в своей компании", measure:"Должность, доход, формат, город, задачи.",
+   hint:"Если главное для тебя доход или признание, у них есть свои дороги: «Материальные блага» и «Признание»."},
+  {title:"Признание", wishEx:"хочу, чтобы меня знали",
+   why:"Что изменится, когда тебя узнают и оценят? Чьё признание тебе важно?",
+   resEx:"Меня знают и ценят как специалиста по свечной магии", measure:"Например: отзывы, выступления, число учеников. Можно без цифр.",
+   hint:"Пиши о себе и своём деле. Чужие мнения не требуем, описываем, как это выглядит."},
+  {title:"Дружба", wishEx:"хочу близких подруг",
+   why:"Что для тебя значит настоящая дружба? Чего тебе сейчас не хватает?",
+   resEx:"Рядом со мной есть подруги, с которыми я могу быть собой", measure:"Числа здесь не обязательны.",
+   hint:"Пиши про свою жизнь и свои отношения, без требований к конкретному человеку."},
+  {title:"Любовь", wishEx:"хочу встретить любимого человека",
+   why:"Что для тебя главное в любви? Каким ты хочешь чувствовать себя рядом с любимым?",
+   resEx:"Я в отношениях, где меня любят и я люблю, рядом с ним мне спокойно", measure:"Любовь не обязательно измерять. Можно описать, как это ощущается.",
+   hint:"Пиши о себе и своих отношениях. Управлять чувствами и решениями конкретного человека мы не просим."},
+  {title:"Семья и брак", wishEx:"хочу, чтобы в семье было спокойно",
+   why:"Какой ты хочешь видеть свою семью? Что для тебя в ней главное?",
+   resEx:"В нашей семье тепло и спокойно, по вечерам мы ужинаем вместе", measure:"Можно описать конкретную картинку из жизни.",
+   hint:"Пиши про свою часть и своё участие. Решения других людей остаются за ними."},
+  {title:"Дети", wishEx:"хочу больше времени с ребёнком",
+   why:"Что тебе важно в отношениях с детьми или в желании стать мамой?",
+   resEx:"У меня с сыном доверительные отношения, он делится со мной своими делами", measure:"Можно описать, как это выглядит в обычный день.",
+   hint:"Пиши о себе и своих отношениях с детьми. Выбор ребёнка остаётся за ним."},
+  {title:"Творчество", wishEx:"хочу снова рисовать",
+   why:"Зачем тебе творчество? Что ты чувствуешь, когда создаёшь?",
+   resEx:"Я рисую каждую неделю и показываю свои работы людям", measure:"Например: сколько работ, где показываешь. Можно без цифр.",
+   hint:"Пиши, чем именно ты занимаешься и как это выглядит."},
+  {title:"Предназначение", wishEx:"хочу найти своё дело",
+   why:"Как ты поймёшь, что занимаешься своим делом? Что в нём для тебя главное?",
+   resEx:"Я занимаюсь делом, в котором чувствую себя на своём месте", measure:"Можно назвать дело, людей, для кого ты это делаешь.",
+   hint:"Если пока не знаешь, какое дело, опиши ощущение и признаки."},
+  {title:"Свобода", wishEx:"хочу больше свободы",
+   why:"Свобода от чего и для чего? Что ты будешь делать, когда она появится?",
+   resEx:"Я сама решаю, как распоряжаться своим временем и деньгами", measure:"Например: свободные дни, путешествия, формат работы.",
+   hint:"Пиши, что именно становится свободным в твоей жизни."},
+  {title:"Духовность", wishEx:"хочу больше гармонии внутри",
+   why:"Что для тебя духовность? Что изменится внутри тебя?",
+   resEx:"У меня есть практика, которая меня наполняет, и я возвращаюсь к ней каждый день", measure:"Числа не обязательны. Можно описать практику или состояние.",
+   hint:"Пиши о своём состоянии и своей практике."}
+];
+const BRAND = "Elena Afitciya · Городская магия";
+const STORE_KEY = "moe-zhelanie-2027-v2";
+const DATES = [
+  {v:"mar", label:"К 1 марта 2027 года", text:"К 1 марта 2027 года"},
+  {v:"may", label:"К 1 мая 2027 года", text:"К 1 мая 2027 года"},
+  {v:"sep", label:"К 1 сентября 2027 года", text:"К 1 сентября 2027 года"},
+  {v:"end", label:"К концу 2027 года", text:"К концу 2027 года"},
+  {v:"own", label:"Своя дата", text:null},
+  {v:"none", label:"Без даты", text:""}
+];
+const HOWS = ["легко","с радостью","спокойно","стабильно","постоянно","с удовольствием"];
+
+/* ---------- текст ---------- */
+const clean = s => (s||"").trim().replace(/\s+/g," ").replace(/[\s.!…,;]+$/,"");
+const lcFirst = s => s ? s.charAt(0).toLowerCase()+s.slice(1) : s;
+const ucFirst = s => s ? s.charAt(0).toUpperCase()+s.slice(1) : s;
+const esc = s => (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const joinRu = a => a.length<2 ? (a[0]||"") : a.slice(0,-1).join(", ")+" и "+a[a.length-1];
+const VOICE = `<p class="voice">Можно надиктовать: нажми микрофон на клавиатуре телефона.</p>`;
+
+/* ---------- проверка «твоё ли это желание» ---------- */
+const TRUTH = [
+  {id:"feel", text:"Представь, что желание уже сбылось. Что ты чувствуешь?", options:[
+    {v:"joy",label:"Радость, лёгкость, тепло",s:2,pos:"представляешь его и чувствуешь радость и лёгкость"},
+    {v:"calm",label:"Спокойствие, «наконец-то»",s:2,pos:"чувствуешь спокойствие, когда представляешь его"},
+    {v:"flat",label:"Ничего особенного",s:0,neg:"особых чувств оно пока не вызывает"},
+    {v:"tense",label:"Напряжение, тревогу или «надо»",s:-2,neg:"оно вызывает скорее напряжение или чувство «надо»",hard:true}]},
+  {id:"see", text:"Ты видишь себя в этой картинке? Можешь представить, как это выглядит в твоей обычной жизни?", options:[
+    {v:"clear",label:"Да, вижу ясно",s:2,pos:"ясно видишь себя в нём"},
+    {v:"vague",label:"Вижу, но смутно",s:1,pos:"видишь себя в нём, пусть пока смутно"},
+    {v:"no",label:"Не получается представить",s:-1,neg:"пока не получается увидеть себя в нём"}]},
+  {id:"whom", text:"Для кого это желание?", options:[
+    {v:"self",label:"Для себя",s:2,pos:"хочешь его для себя"},
+    {v:"both",label:"И для себя, и для близких",s:1,pos:"хочешь его для себя и для близких"},
+    {v:"approve",label:"Скорее чтобы кто-то оценил или одобрил",s:-2,neg:"оно скорее для того, чтобы кто-то оценил или одобрил",hard:true},
+    {v:"must",label:"Так принято, так надо",s:-2,neg:"оно скорее про «так принято, так надо»",hard:true}]},
+  {id:"why", type:"text"},
+  {id:"keep", text:"Представь, что то, ради чего это желание, пришло в твою жизнь другим путём. Тебе всё равно нужно именно это?", options:[
+    {v:"yes",label:"Да, мне важно именно это",s:2,pos:"тебе важно именно это, а не только то, что оно даст"},
+    {v:"deeper",label:"Нет, мне важнее то, ради чего",s:0,neg:"тебе важнее то, ради чего оно"},
+    {v:"unsure",label:"Пока не знаю",s:0}]}
+];
+function verdictOf(a){
+  let score=0,pos=[],neg=[],hard=false;
+  TRUTH.forEach(q=>{ if(!q.options) return; const o=q.options.find(x=>x.v===a[q.id]); if(!o) return;
+    score+=o.s; if(o.pos) pos.push(o.pos); if(o.neg) neg.push(o.neg); if(o.hard) hard=true; });
+  const kind = hard ? "not" : (score>=6 && !neg.length ? "yes" : "maybe");
+  return {kind,pos,neg,deeper:a.keep==="deeper"};
+}
+
+/* ---------- хранилище ---------- */
+const emptyStore = () => ({gift:null, keys:{slots:Array.from({length:12},()=>({text:"",confirmedAt:null}))}});
+let store = emptyStore(), storageOk=true;
+function load(){ try{ const raw=localStorage.getItem(STORE_KEY); if(raw){const d=JSON.parse(raw); if(d&&d.keys&&Array.isArray(d.keys.slots)&&d.keys.slots.length===12) store=d;} }catch(e){ storageOk=false; } }
+function save(){ try{ localStorage.setItem(STORE_KEY,JSON.stringify(store)); storageOk=true; }catch(e){ storageOk=false; } }
+function wipe(){ try{ localStorage.removeItem(STORE_KEY); }catch(e){} store=emptyStore(); }
+
+/* ---------- состояние ---------- */
+let view={name:"home"}, flow=null;
+const $app=document.getElementById("app");
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;t.setAttribute("role","status");document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
+function confirmBox(title,text,ok,onOk){
+  const m=document.createElement("div");m.className="modal";
+  m.innerHTML=`<div class="box" role="dialog" aria-modal="true"><h3>${esc(title)}</h3><p class="muted">${esc(text)}</p><div class="navrow"><button class="btn ghost" data-x>Отмена</button><button class="btn" data-ok>${esc(ok)}</button></div></div>`;
+  m.querySelector("[data-x]").onclick=()=>m.remove(); m.querySelector("[data-ok]").onclick=()=>{m.remove();onOk();};
+  m.onclick=e=>{if(e.target===m)m.remove();}; document.body.appendChild(m);
+}
+const storageLine=()=>storageOk
+ ? `Всё, что ты пишешь, хранится только в этом браузере на этом устройстве и никуда не отправляется. <button class="link danger" data-wipe>Удалить мои данные</button>`
+ : `Этот браузер не даёт сохранять данные (например, в приватном режиме). Скопируй или скачай желание, чтобы оно не потерялось.`;
+function bindWipe(){const b=$app.querySelector("[data-wipe]");if(b)b.onclick=()=>confirmBox("Удалить твои данные?","Желание и колесо желаний сотрутся из этого браузера. Вернуть их будет нельзя.","Удалить",()=>{wipe();flow=null;view={name:"home"};render();toast("Данные удалены");});}
+function topbar(label,right=""){return `<div class="topbar"><button class="link" data-back>‹ ${esc(label)}</button>${right}</div>`;}
+function bindBack(fn){const b=$app.querySelector("[data-back]");if(b)b.onclick=fn;}
+
+/* ---------- шаги сценария ---------- */
+// wish → feel → see → whom → why → keep → verdict → date → result → measure → how → final
+const STEPS=["wish","feel","see","whom","why","keep","verdict","date","result","measure","how","final"];
+const QSTEPS=STEPS.filter(s=>s!=="verdict"&&s!=="final");
+function startFlow(mode,road,slot){
+  const prev = mode==="slot" ? store.keys.slots[slot] : null;
+  flow={mode,road,slot,step:0,wish:(prev&&prev.wish)||"",a:(prev&&prev.a)?{...prev.a}:{},b:(prev&&prev.b)?{...prev.b,how:[...(prev.b.how||[])]}:{how:[]},text:"",confirmedAt:null};
+  view={name:"flow"};render();
+}
+function go(step){flow.step=STEPS.indexOf(step);render();}
+function next(){flow.step++;render();}
+function back(){
+  if(flow.step===0){view={name:flow.mode==="gift"?"roads":"keys"};render();return;}
+  flow.step--;render();
+}
+
+function render(){
+  const v=view.name;
+  if(v==="home")renderHome(); else if(v==="roads")renderRoads(); else if(v==="flow")renderFlow();
+  else if(v==="keys")renderKeys(); else if(v==="quick")renderQuick();
+  window.scrollTo({top:0});
+}
+
+function renderHome(){
+  const g=store.gift;
+  const stars=Array.from({length:14},(_,i)=>`<i style="left:${(i*37)%96+2}%;top:${(i*53)%80+6}%;animation-delay:${(i%5)*.7}s"></i>`).join("");
+  $app.innerHTML=`<div class="stack-lg fade">
+   <section class="hero"><div class="stars">${stars}</div><div class="stack" style="position:relative">
+    <div class="eyebrow">Подарок марафона «Год больших событий»</div>
+    <h1>Моё желание<br>2027</h1>
+    <p>Выбери одну из 12 жизненных дорог, проверь, твоё ли это желание, и собери его в одну ясную фразу. Её можно сохранить, распечатать и работать с ней весь год.</p>
+   </div></section>
+   ${g&&g.text?`<section class="card stack">
+     <div class="row"><span class="badge ${g.confirmedAt?"":"blue"}">${g.confirmedAt?"Моё желание":"Черновик"}</span><span class="muted small">${esc(ROADS[g.road].title)}</span></div>
+     <p style="font-family:var(--f-display);font-size:19px;color:var(--blue);line-height:1.4">${esc(g.text)}</p>
+     <div class="row"><button class="btn" data-open>Открыть</button><button class="btn ghost" data-restart>Сформулировать заново</button></div>
+   </section>`:`<button class="btn wide" data-start>Сформулировать желание</button>`}
+   <button class="choice" data-keys><span class="row" style="gap:8px"><span class="t">Колесо желаний 2027</span><span class="badge">для «Ключей от 2027»</span></span>
+    <span class="d">Желания по всем 12 жизненным дорогам на одном колесе. Сектор можно оставить пустым. Прототип модуля, отдельно от платного продукта.</span></button>
+   <p class="storage">${storageLine()}</p></div>`;
+  const s=$app.querySelector("[data-start]"); if(s) s.onclick=()=>{view={name:"roads"};render();};
+  const o=$app.querySelector("[data-open]"); if(o) o.onclick=()=>{const g=store.gift;flow={mode:"gift",road:g.road,step:STEPS.indexOf("final"),wish:g.wish,a:g.a,b:g.b,text:g.text,confirmedAt:g.confirmedAt};view={name:"flow"};render();};
+  const r=$app.querySelector("[data-restart]"); if(r) r.onclick=()=>confirmBox("Начать заново?","В подарке одно желание. Текущее заменится новым.","Начать заново",()=>{store.gift=null;save();view={name:"roads"};render();});
+  $app.querySelector("[data-keys]").onclick=()=>{view={name:"keys"};render();};
+  bindWipe();
+}
+
+function renderRoads(){
+  $app.innerHTML=`<div class="stack-lg fade">${topbar("На главную")}
+   <div class="stack"><div class="eyebrow">Шаг 1</div><h2>Выбери дорогу</h2><p class="muted">О какой сфере твоё желание на 2027 год?</p></div>
+   <div class="roads">${ROADS.map((r,i)=>`<button class="road" data-r="${i}"><span class="n">${i+1}</span><span class="nm">${esc(r.title)}</span></button>`).join("")}</div></div>`;
+  bindBack(()=>{view={name:"home"};render();});
+  $app.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>startFlow("gift",+b.dataset.r));
+}
+
+function header(){
+  const f=flow, s=STEPS[f.step], qi=QSTEPS.indexOf(s);
+  const right= qi>=0 ? `<span class="qcount">Шаг ${qi+1} из ${QSTEPS.length}</span>` : "";
+  const pct = Math.round((Math.max(qi,0)+1)/(QSTEPS.length+1)*100);
+  return topbar("Назад",right)+(qi>=0?`<div class="progress" aria-hidden="true" style="margin-top:-6px"><span style="width:${pct}%"></span></div>`:"");
+}
+function chipsHTML(opts,val,multi){
+  return `<div class="chips">${opts.map(o=>{const sel=multi?val.includes(o.v):val===o.v;return `<button class="chip ${multi?"multi":""} ${sel?"sel":""}" role="${multi?"checkbox":"radio"}" aria-checked="${sel}" data-v="${esc(o.v)}"><span class="dot"></span><span>${esc(o.label)}</span></button>`;}).join("")}</div>`;
+}
+
+/* ---------- сборка фразы ---------- */
+function dateText(b){
+  const d=DATES.find(x=>x.v===b.date); if(!d) return "";
+  if(d.v==="own") return ucFirst(clean(b.dateOwn));
+  return d.text;
+}
+function composeWish(b){
+  let core=clean(b.result); if(!core) return "";
+  const m=clean(b.measure); if(m) core+=", "+lcFirst(m);
+  const how=(b.how||[]).map(x=>x==="own"?clean(b.howOwn):x).filter(Boolean);
+  if(how.length) core+=", "+joinRu(how);
+  const d=dateText(b);
+  return (d? d+" "+lcFirst(core) : ucFirst(core))+".";
+}
+function resultTips(t,road){
+  const s=" "+t.toLowerCase().replace(/[.,!?;:«»"()]/g," ")+" ", tips=[];
+  if(/\s(хочу|хотела бы|хочется|мечтаю)\s/.test(s)) tips.push("Опиши так, будто это уже есть. Вместо «хочу…» напиши, как это выглядит сейчас.");
+  if(/\s(буду|будет|будут|стану|станет|постараюсь|попробую|смогу)\s/.test(s)) tips.push("Попробуй настоящее время: «я руковожу», «у меня есть», «мой доход составляет».");
+  if(/\sне\s/.test(s)) tips.push("Если получится, опиши, что есть вместо этого. Например, вместо «не устаю» можно «у меня достаточно сил на…». Это подсказка, не правило.");
+  if(t.trim() && !/^\s(я|у меня|в моей|в нашей|мой|моя|моё|мое|мои|меня|мне|мы|наш|наша|наше|рядом со мной|со мной)\s/.test(s)) tips.push("Можно начать от себя: «Я…», «У меня…», «В моей жизни…».");
+  return tips;
+}
+
+function renderFlow(){
+  const f=flow, s=STEPS[f.step], R=ROADS[f.road];
+  if(s==="verdict") return renderVerdict();
+  if(s==="final") return renderFinal();
+  let html="", nextOk=()=>true, bind=()=>{}, optional=false;
+  const quote = s!=="wish" ? `<div class="wishquote">${esc(clean(f.wish))}</div>` : "";
+  if(s==="wish"){
+    html=`<div class="stack"><div class="eyebrow">${esc(R.title)}</div><label class="q" for="ta">Как ты сейчас формулируешь своё желание?</label><p class="muted small">Напиши как есть, своими словами. Уточнять будем дальше.</p></div>
+      <textarea id="ta" placeholder="Например: ${esc(R.wishEx)}">${esc(f.wish)}</textarea>${VOICE}`;
+    nextOk=()=>!!clean(f.wish); bind=sync=>{const t=$app.querySelector("#ta");t.oninput=()=>{f.wish=t.value;sync();};};
+  }else if(s==="why"){
+    html=`${quote}<div class="stack"><label class="q" for="ta">${esc(R.why)}</label></div><textarea id="ta">${esc(f.a.why||"")}</textarea>${VOICE}`;
+    nextOk=()=>!!clean(f.a.why); bind=sync=>{const t=$app.querySelector("#ta");t.oninput=()=>{f.a.why=t.value;sync();};};
+  }else if(["feel","see","whom","keep"].includes(s)){
+    const q=TRUTH.find(x=>x.id===s);
+    html=`${quote}<div class="stack"><label class="q">${esc(q.text)}</label>${s==="keep"&&clean(f.a.why)?`<p class="muted small">Ты написала: «${esc(clean(f.a.why))}»</p>`:""}</div>${chipsHTML(q.options,f.a[s])}`;
+    nextOk=()=>!!f.a[s];
+    bind=sync=>$app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{f.a[s]=c.dataset.v;$app.querySelectorAll(".chip").forEach(x=>{x.classList.toggle("sel",x===c);x.setAttribute("aria-checked",x===c);});sync();});
+  }else if(s==="date"){
+    html=`<div class="stack"><div class="eyebrow">Собираем формулировку</div><label class="q">К какому сроку?</label><p class="muted small">Срок по желанию. Можно оставить без даты.</p></div>
+      ${chipsHTML(DATES.map(d=>({v:d.v,label:d.label})),f.b.date)}
+      <input type="text" id="own" placeholder="Например: к моему дню рождения в 2027 году" value="${esc(f.b.dateOwn||"")}" ${f.b.date==="own"?"":"hidden"}>`;
+    nextOk=()=>!!f.b.date&&(f.b.date!=="own"||!!clean(f.b.dateOwn));
+    bind=sync=>{
+      $app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{f.b.date=c.dataset.v;$app.querySelectorAll(".chip").forEach(x=>{x.classList.toggle("sel",x===c);x.setAttribute("aria-checked",x===c);});const o=$app.querySelector("#own");o.hidden=f.b.date!=="own";if(!o.hidden)o.focus();sync();});
+      const o=$app.querySelector("#own");o.oninput=()=>{f.b.dateOwn=o.value;sync();};
+    };
+  }else if(s==="result"){
+    html=`<div class="stack"><div class="eyebrow">Собираем формулировку</div><label class="q" for="ta">Как это выглядит, когда уже сбылось?</label>
+      <p class="muted small">Напиши от себя и в настоящем времени, как будто это уже есть. Один главный смысл. ${esc(R.hint)}</p></div>
+      <textarea id="ta" placeholder="Например: ${esc(R.resEx)}">${esc(f.b.result||"")}</textarea>${VOICE}
+      <div class="tips" id="tips"></div><div class="preview"><div class="lbl">Твоя фраза</div><div class="ph" id="pv"></div></div>`;
+    nextOk=()=>!!clean(f.b.result);
+    bind=sync=>{const t=$app.querySelector("#ta");const upd=()=>{f.b.result=t.value;$app.querySelector("#tips").innerHTML=resultTips(t.value,R).map(x=>`<div class="tip">${esc(x)}</div>`).join("");$app.querySelector("#pv").textContent=composeWish(f.b)||"…";sync();};t.oninput=upd;upd();};
+  }else if(s==="measure"){
+    optional=true;
+    html=`<div class="stack"><div class="eyebrow">Собираем формулировку</div><label class="q" for="ta">Добавить конкретику?</label><p class="muted small">${esc(R.measure)} Это продолжит фразу после запятой.</p></div>
+      <input type="text" id="ta" value="${esc(f.b.measure||"")}" placeholder="Например: в своём городе, с командой, которая мне нравится">${VOICE}
+      <div class="preview"><div class="lbl">Твоя фраза</div><div class="ph" id="pv"></div></div>`;
+    bind=sync=>{const t=$app.querySelector("#ta");const upd=()=>{f.b.measure=t.value;$app.querySelector("#pv").textContent=composeWish(f.b);};t.oninput=upd;upd();};
+  }else if(s==="how"){
+    optional=true;
+    const opts=HOWS.map(h=>({v:h,label:ucFirst(h)})).concat([{v:"own",label:"Своё слово"}]);
+    html=`<div class="stack"><div class="eyebrow">Собираем формулировку</div><label class="q">Как это происходит?</label><p class="muted small">По желанию, можно выбрать несколько. Это про твоё состояние, не обещание результата.</p></div>
+      ${chipsHTML(opts,f.b.how,true)}
+      <input type="text" id="own" placeholder="Например: в удовольствие" value="${esc(f.b.howOwn||"")}" ${f.b.how.includes("own")?"":"hidden"}>
+      <div class="preview"><div class="lbl">Твоя фраза</div><div class="ph" id="pv"></div></div>`;
+    bind=sync=>{
+      const pv=()=>{$app.querySelector("#pv").textContent=composeWish(f.b);};
+      $app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const v=c.dataset.v,i=f.b.how.indexOf(v);if(i>=0)f.b.how.splice(i,1);else f.b.how.push(v);c.classList.toggle("sel");c.setAttribute("aria-checked",c.classList.contains("sel"));const o=$app.querySelector("#own");o.hidden=!f.b.how.includes("own");if(!o.hidden)o.focus();pv();});
+      const o=$app.querySelector("#own");o.oninput=()=>{f.b.howOwn=o.value;pv();};pv();
+    };
+  }
+  const lastQ = s==="how";
+  $app.innerHTML=`<div class="stack-lg fade">${header()}${html}
+    <div class="navrow">${optional?`<button class="btn ghost" data-skip>Пропустить</button>`:""}<button class="btn" data-next>${lastQ?"Собрать желание":(s==="keep"?"Посмотреть вывод":"Дальше")}</button></div></div>`;
+  const nx=$app.querySelector("[data-next]"); const sync=()=>{nx.disabled=!nextOk();};
+  bind(sync); sync();
+  nx.onclick=()=>{ if(lastQ){finish();return;} next(); };
+  const sk=$app.querySelector("[data-skip]"); if(sk) sk.onclick=()=>{ if(s==="measure")f.b.measure=""; if(s==="how"){f.b.how=[];f.b.howOwn="";} if(lastQ){finish();return;} next(); };
+  bindBack(back);
+  const ta=$app.querySelector("#ta"); if(ta&&!("ontouchstart" in window)) ta.focus();
+}
+
+function renderVerdict(){
+  const f=flow, v=verdictOf(f.a);
+  const T={yes:"Похоже, это твоё истинное желание",maybe:"Похоже, это твоё желание, но в нём есть сомнения",not:"Похоже, это пока не совсем твоё желание"}[v.kind];
+  const posBlock=v.pos.length?`<div><p><b>${v.kind==="not"?"Что в нём твоё:":"Потому что ты"}</b></p><ul>${v.pos.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+  const negBlock=v.neg.length?`<div><p><b>${v.kind==="not"?"Что на это указывает:":"Что смущает:"}</b></p><ul>${v.neg.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+  const deeper=v.deeper&&clean(f.a.why)?`<div class="note"><p>Ты написала, ради чего это желание: «${esc(clean(f.a.why))}». Можно сформулировать желание прямо через это.</p></div>`:"";
+  $app.innerHTML=`<div class="stack-lg fade">${topbar("Назад")}
+    <div class="wishquote">${esc(clean(f.wish))}</div>
+    <section class="verdict ${v.kind}"><div class="eyebrow">Вывод по твоим ответам</div><h2>${T}</h2>${v.kind==="not"?negBlock+posBlock:posBlock+negBlock}
+      <p class="muted small">Это подсказка по твоим ответам. Решаешь ты.</p></section>
+    ${deeper}
+    <button class="btn wide" data-keep>${v.kind==="not"?"Всё равно оставить и сформулировать":"Сформулировать это желание"}</button>
+    <button class="btn ghost wide" data-rewrite>Переписать желание</button></div>`;
+  $app.querySelector("[data-keep]").onclick=()=>go("date");
+  $app.querySelector("[data-rewrite]").onclick=()=>{
+    const m=document.createElement("div");m.className="modal";
+    m.innerHTML=`<div class="box"><h3>Как звучит твоё желание теперь?</h3>${v.deeper&&clean(f.a.why)?`<p class="muted small">Подсказка, твой ответ: «${esc(clean(f.a.why))}»</p>`:""}<textarea id="rw">${esc(f.wish)}</textarea>${VOICE}<div class="navrow"><button class="btn ghost" data-x>Отмена</button><button class="btn" data-ok>Проверить заново</button></div></div>`;
+    m.querySelector("[data-x]").onclick=()=>m.remove();
+    m.querySelector("[data-ok]").onclick=()=>{const t=m.querySelector("#rw").value;if(!clean(t))return;f.wish=t;["feel","see","whom","keep"].forEach(k=>delete f.a[k]);m.remove();go("feel");};
+    document.body.appendChild(m);
+  };
+  bindBack(back);
+}
+
+function finish(){ flow.text=composeWish(flow.b); flow.confirmedAt=null; persist(); go("final"); }
+function persist(){
+  const f=flow, rec={road:f.road,wish:f.wish,a:f.a,b:f.b,text:f.text,confirmedAt:f.confirmedAt||null,updatedAt:new Date().toISOString()};
+  if(f.mode==="gift") store.gift=rec; else store.keys.slots[f.slot]=rec;
+  save();
+}
+const inArtifact=!!(window.claude&&typeof window.claude.use==="function");
+
+function renderFinal(){
+  const f=flow, R=ROADS[f.road], v=verdictOf(f.a);
+  const vt={yes:"Твоё истинное желание",maybe:"Твоё желание, есть сомнения",not:"Пока не совсем твоё"}[v.kind];
+  $app.innerHTML=`<div class="stack-lg fade">${topbar(f.mode==="gift"?"На главную":"К колесу")}
+    <div class="stack"><div class="eyebrow">${esc(R.title)} · ${vt}</div><h2>Твоё желание на 2027</h2>
+    <p class="muted">Прочитай вслух. Если какое-то слово не твоё, поправь прямо здесь.</p></div>
+    <div class="result-card stack"><textarea id="res" aria-label="Желание">${esc(f.text)}</textarea><div id="st" style="position:relative;z-index:1"></div></div>
+    <button class="btn gold wide" data-confirm>Это моё желание</button>
+    <div class="row"><button class="btn ghost" data-copy>Скопировать</button><button class="btn ghost" data-png>Сохранить картинкой</button>${inArtifact?"":`<button class="btn ghost" data-print>Печать или PDF</button>`}</div>
+    ${inArtifact?`<p class="muted small">Печать и PDF работают в файл-версии. Здесь сохрани картинку или скопируй текст.</p>`:""}
+    ${f.mode==="gift"?`<div class="note small">Если ты участница «Ключей от 2027», это желание можно перенести в сектор «${esc(R.title)}» колеса желаний. <button class="link" data-towheel>Перенести</button></div>`:""}
+    <div class="row"><button class="link" data-edit>Изменить ответы</button></div>
+    <p class="storage">${storageLine()}</p></div>`;
+  const ta=$app.querySelector("#res"), st=$app.querySelector("#st"), cb=$app.querySelector("[data-confirm]");
+  const show=()=>{ if(f.confirmedAt){st.innerHTML=`<span class="confirmed">✦ Моё желание · ${new Date(f.confirmedAt).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"})}</span>`;cb.textContent="Подтверждено";cb.disabled=true;}
+    else{st.innerHTML=`<span class="muted small">Черновик. Сохраняется автоматически.</span>`;cb.textContent="Это моё желание";cb.disabled=!clean(ta.value);} };
+  show();
+  ta.oninput=()=>{f.text=ta.value;f.confirmedAt=null;persist();show();};
+  cb.onclick=()=>{f.text=ta.value;f.confirmedAt=new Date().toISOString();persist();show();toast(f.mode==="gift"?"Желание сохранено":"Желание записано в колесо");};
+  $app.querySelector("[data-copy]").onclick=()=>copyText(ta.value);
+  $app.querySelector("[data-png]").onclick=()=>downloadCard(R.title,ta.value,!!f.confirmedAt);
+  const pr=$app.querySelector("[data-print]"); if(pr) pr.onclick=()=>printWish(R.title,ta.value);
+  const tw=$app.querySelector("[data-towheel]"); if(tw) tw.onclick=()=>{
+    const go2=()=>{store.keys.slots[f.road]={road:f.road,wish:f.wish,a:f.a,b:f.b,text:ta.value,confirmedAt:f.confirmedAt||null};save();toast("Перенесено в колесо");};
+    if(clean(store.keys.slots[f.road].text)) confirmBox("Заменить желание в секторе?",`В секторе «${R.title}» уже есть желание. Оно заменится этим.`,"Заменить",go2); else go2();
+  };
+  $app.querySelector("[data-edit]").onclick=()=>{f.step=0;render();};
+  bindBack(()=>{view={name:f.mode==="gift"?"home":"keys"};render();});
+  bindWipe();
+}
+
+/* ---------- колесо желаний ---------- */
+let wheelURL="";
+async function renderKeys(){
+  const S=store.keys.slots, filled=S.filter(s=>clean(s.text)).length;
+  $app.innerHTML=`<div class="stack-lg fade">${topbar("На главную")}
+    <div class="stack"><div class="eyebrow">Модуль для «Ключей от 2027» · прототип</div><h2>Колесо желаний 2027</h2>
+    <p class="muted">12 жизненных дорог по порядку ритуала. Впиши желание в любые сектора, пустые тоже остаются на колесе. Заполнено ${filled} из 12.</p></div>
+    <img class="wheelimg" id="wheel" alt="Колесо желаний на 12 секторов">
+    <div class="row"><button class="btn" data-wpng>Скачать колесо</button>${inArtifact?"":`<button class="btn ghost" data-wprint>Печать или PDF</button>`}<button class="btn ghost" data-wtxt ${filled?"":"disabled"}>Текстом</button></div>
+    <div class="stack"><h3>Блокнот желаний</h3>
+    ${ROADS.map((r,i)=>{const s=S[i],has=!!clean(s.text);return `<div class="entry ${has?"filled":""}"><div class="head"><span class="eyebrow" style="color:var(--blue2)">${i+1}. ${esc(r.title)}</span>${has?`<span class="badge ${s.confirmedAt?"":"blue"}">${s.confirmedAt?"моё":"черновик"}</span>`:""}</div>
+      ${has?`<p class="ph">${esc(s.text)}</p>`:`<p class="muted small">Пока пусто</p>`}
+      <div class="row"><button class="btn ghost" data-steps="${i}">${has?"Пересобрать по шагам":"Сформулировать по шагам"}</button><button class="link" data-quick="${i}">${has?"Править":"Записать сразу"}</button></div></div>`;}).join("")}
+    </div><p class="storage">${storageLine()}</p></div>`;
+  bindBack(()=>{view={name:"home"};render();});
+  $app.querySelectorAll("[data-steps]").forEach(b=>b.onclick=()=>{const i=+b.dataset.steps;startFlow("slot",i,i);});
+  $app.querySelectorAll("[data-quick]").forEach(b=>b.onclick=()=>{view={name:"quick",slot:+b.dataset.quick};render();});
+  $app.querySelector("[data-wpng]").onclick=async()=>{const c=await drawWheel();c.toBlob(b=>downloadBlob(b,"koleso-zhelaniy-2027.png"),"image/png");};
+  const wp=$app.querySelector("[data-wprint]"); if(wp) wp.onclick=()=>printWheel();
+  $app.querySelector("[data-wtxt]").onclick=()=>downloadBlob(new Blob([wheelText()],{type:"text/plain;charset=utf-8"}),"koleso-zhelaniy-2027.txt");
+  bindWipe();
+  const c=await drawWheel(); wheelURL=c.toDataURL("image/png"); const img=document.getElementById("wheel"); if(img) img.src=wheelURL;
+}
+function renderQuick(){
+  const i=view.slot, s=store.keys.slots[i], R=ROADS[i];
+  $app.innerHTML=`<div class="stack-lg fade">${topbar("К колесу")}
+    <div class="stack"><div class="eyebrow">${i+1}. ${esc(R.title)}</div><h2>Желание для этой дороги</h2><p class="muted small">Можно оставить пустым.</p></div>
+    <textarea id="ta" placeholder="Например: ${esc(R.resEx)}">${esc(s.text)}</textarea>${VOICE}<div class="tips" id="tips"></div>
+    <div class="navrow"><button class="btn ghost" data-clear>Очистить</button><button class="btn" data-ok>Сохранить</button></div></div>`;
+  const t=$app.querySelector("#ta"); const upd=()=>{$app.querySelector("#tips").innerHTML=resultTips(t.value,R).map(x=>`<div class="tip">${esc(x)}</div>`).join("");}; t.oninput=upd; upd();
+  $app.querySelector("[data-ok]").onclick=()=>{store.keys.slots[i]={...s,text:t.value,confirmedAt:clean(t.value)?new Date().toISOString():null};save();view={name:"keys"};render();toast("Сохранено");};
+  $app.querySelector("[data-clear]").onclick=()=>{t.value="";upd();t.focus();};
+  bindBack(()=>{view={name:"keys"};render();});
+}
+function wheelText(){const S=store.keys.slots;return "КОЛЕСО ЖЕЛАНИЙ 2027\n\n"+ROADS.map((r,i)=>`${i+1}. ${r.title}\n${clean(S[i].text)?S[i].text.trim():"пока пусто"}`).join("\n\n")+`\n\n${BRAND}\n`;}
+
+/* ---------- отрисовка ---------- */
+async function fontsReady(){try{await Promise.all([document.fonts.load("40px Prata"),document.fonts.load("500 28px 'Golos Text'"),document.fonts.load("700 20px 'Golos Text'")]);}catch(e){}}
+function wrap(ctx,text,maxW){const out=[];text=String(text).replace(/(\d) (?=\d{3}(?!\d))/g,"$1\u00A0");for(const para of text.split("\n")){if(!para.trim()){continue;}let line="";for(const w of para.split(/[ \t]+/)){const t=line?line+" "+w:w;if(ctx.measureText(t).width>maxW&&line){out.push(line);line=w;}else line=t;}out.push(line);}return out;}
+async function drawWheel(){
+  await fontsReady();
+  const S=store.keys.slots, N=12, W=2000, H=2000, cx=W/2, cy=H/2, R=960, r0=250;
+  const c=document.createElement("canvas");c.width=W;c.height=H;const ctx=c.getContext("2d");
+  ctx.fillStyle="#F6F0E4";ctx.fillRect(0,0,W,H);
+  const step=2*Math.PI/N, start=-Math.PI/2-step/2;
+  for(let i=0;i<N;i++){
+    const a0=start+i*step,a1=a0+step,has=!!clean(S[i].text);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a0,a1);ctx.closePath();
+    ctx.fillStyle=has?(i%2?"#E3E9F7":"#EDF1FA"):(i%2?"#FBF6EC":"#FFFBF3");ctx.fill();
+    ctx.strokeStyle="#C9A65E";ctx.lineWidth=3;ctx.stroke();
+  }
+  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.lineWidth=8;ctx.strokeStyle="#B48A3A";ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R-18,0,2*Math.PI);ctx.lineWidth=2;ctx.strokeStyle="#D9C391";ctx.stroke();
+  // центр
+  const g=ctx.createRadialGradient(cx,cy-60,20,cx,cy,r0);g.addColorStop(0,"#34508F");g.addColorStop(1,"#1B2A5A");
+  ctx.beginPath();ctx.arc(cx,cy,r0,0,2*Math.PI);ctx.fillStyle=g;ctx.fill();ctx.lineWidth=6;ctx.strokeStyle="#B48A3A";ctx.stroke();
+  ctx.textAlign="center";ctx.fillStyle="#EEDFB9";ctx.font="700 30px 'Golos Text', sans-serif";ctx.fillText("КОЛЕСО ЖЕЛАНИЙ",cx,cy-40);
+  ctx.fillStyle="#FFF8EC";ctx.font="120px Prata, serif";ctx.fillText("2027",cx,cy+80);
+  ctx.fillStyle="#D9C391";ctx.font="400 24px 'Golos Text', sans-serif";ctx.fillText("Elena Afitciya",cx,cy+150);
+  // тексты секторов
+  for(let i=0;i<N;i++){
+    const mid=start+(i+.5)*step, s=S[i], has=!!clean(s.text);
+    const arcText=(txt,rad,font,color)=>{ctx.save();ctx.translate(cx+Math.cos(mid)*rad,cy+Math.sin(mid)*rad);let rot=mid+Math.PI/2;if(Math.sin(mid)>0.01)rot+=Math.PI;ctx.rotate(rot);ctx.textAlign="center";ctx.textBaseline="middle";ctx.font=font;ctx.fillStyle=color;ctx.fillText(txt,0,0);ctx.restore();};
+    arcText(String(i+1),R*0.925,"700 28px 'Golos Text', sans-serif","#B48A3A");
+    let nf=40; ctx.font=nf+"px Prata, serif"; while(ctx.measureText(ROADS[i].title).width>R*0.84*0.46&&nf>26){nf-=2;ctx.font=nf+"px Prata, serif";}
+    arcText(ROADS[i].title,R*0.835,nf+"px Prata, serif","#23356E");
+    ctx.textBaseline="alphabetic";
+    // желание
+    const wx=cx+Math.cos(mid)*(R*0.55), wy=cy+Math.sin(mid)*(R*0.55);
+    const boxW=215, boxH=230;
+    if(has){
+      let size=26,lines;
+      do{ctx.font=`500 ${size}px 'Golos Text', sans-serif`;lines=wrap(ctx,s.text.trim(),boxW);size-=1;}while(lines.length*size*1.3>boxH&&size>16);
+      size+=1; const lh=Math.round(size*1.3);
+      const maxL=Math.floor(boxH/lh); if(lines.length>maxL){lines=lines.slice(0,maxL);lines[maxL-1]=lines[maxL-1].replace(/\s*\S*$/,"")+"…";}
+      ctx.fillStyle="#1D2440";
+      lines.forEach((l,k)=>ctx.fillText(l,wx,wy+k*lh-(lines.length-1)*lh/2+size*0.35));
+    }else{
+      ctx.fillStyle="#A59C88";ctx.font="400 24px 'Golos Text', sans-serif";ctx.fillText("место для",wx,wy-12);ctx.fillText("желания",wx,wy+18);
+    }
+  }
+  return c;
+}
+async function downloadCard(title,text,confirmed){
+  await fontsReady();
+  const W=1080,H=1350,c=document.createElement("canvas");c.width=W;c.height=H;const ctx=c.getContext("2d");
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#FBF5EA");g.addColorStop(1,"#F3EAD9");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle="#B48A3A";ctx.lineWidth=3;ctx.strokeRect(44,44,W-88,H-88);ctx.lineWidth=1.2;ctx.strokeStyle="#D9C391";ctx.strokeRect(60,60,W-120,H-120);
+  ctx.textAlign="center";ctx.fillStyle="#B48A3A";ctx.font="700 24px 'Golos Text', sans-serif";ctx.fillText("ГОРОДСКАЯ МАГИЯ",W/2,150);
+  ctx.fillStyle="#23356E";ctx.font="76px Prata, serif";ctx.fillText("Моё желание 2027",W/2,250);
+  ctx.fillStyle="#676C80";ctx.font="500 28px 'Golos Text', sans-serif";ctx.fillText(title,W/2,306);
+  ctx.strokeStyle="#D9C391";ctx.beginPath();ctx.moveTo(W/2-160,340);ctx.lineTo(W/2+160,340);ctx.stroke();
+  let size=56,lines;do{ctx.font=`${size}px Prata, serif`;lines=wrap(ctx,text.trim(),W-260);size-=2;}while(lines.length*size*1.4>H-640&&size>26);size+=2;
+  const lh=Math.round(size*1.4),total=lines.length*lh;let y=(H+280-total)/2;
+  ctx.fillStyle="#23356E";for(const l of lines){ctx.fillText(l,W/2,y+size);y+=lh;}
+  if(confirmed){ctx.fillStyle="#B48A3A";ctx.font="32px Prata, serif";ctx.fillText("✦ Это моё желание ✦",W/2,H-170);}
+  ctx.fillStyle="#676C80";ctx.font="400 22px 'Golos Text', sans-serif";ctx.fillText(BRAND,W/2,H-110);
+  c.toBlob(b=>downloadBlob(b,"moe-zhelanie-2027.png"),"image/png");
+}
+
+/* ---------- экспорт ---------- */
+let dl=null;(async()=>{try{if(inArtifact)dl=await window.claude.use("downloads");}catch(e){dl=null;}})();
+async function downloadBlob(blob,filename){
+  if(dl){try{await dl.save({filename,data:blob});toast("Файл сохранён");return;}catch(e){if(e&&e.code==="declined"){toast("Сохранение отменено");return;}}}
+  try{const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);toast("Файл скачивается");}catch(e){toast("Не получилось скачать. Скопируй текст.");}
+}
+function copyText(t){const done=()=>toast("Скопировано");const fb=()=>{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done();}catch(e){toast("Выдели текст и скопируй вручную");}ta.remove();};try{navigator.clipboard.writeText(t).then(done,fb);}catch(e){fb();}}
+function printWish(title,text){
+  document.getElementById("printArea").innerHTML=`<div class="pa-sub">${esc(BRAND)}</div><h1>Моё желание 2027</h1><p style="color:#676C80;margin:0 0 12px">${esc(title)}</p><div class="pa-wish">${esc(text)}</div><div class="pa-foot">Сформулировано ${new Date().toLocaleDateString("ru-RU")}</div>`;
+  window.print();
+}
+async function printWheel(){
+  const c=await drawWheel(), S=store.keys.slots;
+  document.getElementById("printArea").innerHTML=`<div class="pa-sub">${esc(BRAND)}</div><h1>Колесо желаний 2027</h1><img src="${c.toDataURL("image/png")}" alt="">
+   <div class="pa-break"></div><h1>Блокнот желаний</h1>${ROADS.map((r,i)=>`<div class="pa-box"><h3>${i+1}. ${esc(r.title)}</h3><p>${esc(clean(S[i].text)?S[i].text:"пока пусто")}</p></div>`).join("")}`;
+  setTimeout(()=>window.print(),60);
+}
+
+load(); render();
+</script>
+
+</body></html>
