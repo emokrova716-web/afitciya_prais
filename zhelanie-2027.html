@@ -96,7 +96,14 @@ button:focus-visible,.chip:focus-visible{outline:2px solid var(--gold);outline-o
 .confirmed{color:var(--blue);font-weight:600}
 .note{background:var(--blue-soft);border-radius:14px;padding:14px 16px}
 .storage{font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
-.wheelimg{width:100%;max-width:100%;height:auto;display:block;border-radius:50%;box-shadow:0 10px 30px rgba(35,53,110,.12)}
+.wheelimg{width:100%;max-width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;display:block}
+.keys-grid{display:grid;gap:22px}
+.wheelcol{display:grid;gap:14px;align-content:start}
+@media (min-width:900px){
+  .app.wide{max-width:1200px}
+  .keys-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:36px;align-items:start}
+  .wheelcol{position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}
+}
 .entry{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:8px}
 .entry.filled{border-color:var(--gold)}
 .entry .head{display:flex;justify-content:space-between;gap:8px;align-items:center}
@@ -274,7 +281,7 @@ function back(){
 }
 
 function render(){
-  const v=view.name;
+  const v=view.name; $app.classList.toggle("wide",v==="keys");
   if(v==="home")renderHome(); else if(v==="roads")renderRoads(); else if(v==="flow")renderFlow();
   else if(v==="keys")renderKeys(); else if(v==="quick")renderQuick();
   window.scrollTo({top:0});
@@ -439,7 +446,7 @@ function persist(){
   if(f.mode==="gift") store.gift=rec; else store.keys.slots[f.slot]=rec;
   save();
 }
-const inArtifact=!!(window.claude&&typeof window.claude.use==="function");
+const inArtifact=(()=>{let fr=false;try{fr=window.self!==window.top;}catch(e){fr=true;}return fr||!!(window.claude&&typeof window.claude.use==="function");})();
 
 function renderFinal(){
   const f=flow, R=ROADS[f.road], v=verdictOf(f.a);
@@ -450,7 +457,7 @@ function renderFinal(){
     <div class="result-card stack"><textarea id="res" aria-label="Желание">${esc(f.text)}</textarea><div id="st" style="position:relative;z-index:1"></div></div>
     <button class="btn gold wide" data-confirm>Это моё желание</button>
     <div class="row"><button class="btn ghost" data-copy>Скопировать</button><button class="btn ghost" data-png>Сохранить картинкой</button>${inArtifact?"":`<button class="btn ghost" data-print>Печать или PDF</button>`}</div>
-    ${inArtifact?`<p class="muted small">Печать и PDF работают в файл-версии. Здесь сохрани картинку или скопируй текст.</p>`:""}
+    ${inArtifact?`<p class="muted small">Здесь печать не работает: страница открыта во встроенном окне. Открой ссылку в браузере, и кнопка «Печать или PDF» появится. Картинку и текст можно сохранить и здесь.</p>`:""}
     ${f.mode==="gift"?`<div class="note small">Если ты участница «Ключей от 2027», это желание можно перенести в сектор «${esc(R.title)}» колеса желаний. <button class="link" data-towheel>Перенести</button></div>`:""}
     <div class="row"><button class="link" data-edit>Изменить ответы</button></div>
     <p class="storage">${storageLine()}</p></div>`;
@@ -479,13 +486,16 @@ async function renderKeys(){
   $app.innerHTML=`<div class="stack-lg fade">${topbar("На главную")}
     <div class="stack"><div class="eyebrow">Модуль для «Ключей от 2027» · прототип</div><h2>Колесо желаний 2027</h2>
     <p class="muted">12 жизненных дорог по порядку ритуала. Впиши желание в любые сектора, пустые тоже остаются на колесе. Заполнено ${filled} из 12.</p></div>
+    <div class="keys-grid"><div class="wheelcol">
     <img class="wheelimg" id="wheel" alt="Колесо желаний на 12 секторов">
     <div class="row"><button class="btn" data-wpng>Скачать колесо</button>${inArtifact?"":`<button class="btn ghost" data-wprint>Печать или PDF</button>`}<button class="btn ghost" data-wtxt ${filled?"":"disabled"}>Текстом</button></div>
+    ${inArtifact?`<p class="muted small">Здесь печать не работает: страница открыта во встроенном окне. Открой ссылку в браузере, чтобы распечатать.</p>`:""}
+    </div>
     <div class="stack"><h3>Блокнот желаний</h3>
     ${ROADS.map((r,i)=>{const s=S[i],has=!!clean(s.text);return `<div class="entry ${has?"filled":""}"><div class="head"><span class="eyebrow" style="color:var(--blue2)">${i+1}. ${esc(r.title)}</span>${has?`<span class="badge ${s.confirmedAt?"":"blue"}">${s.confirmedAt?"моё":"черновик"}</span>`:""}</div>
       ${has?`<p class="ph">${esc(s.text)}</p>`:`<p class="muted small">Пока пусто</p>`}
       <div class="row"><button class="btn ghost" data-steps="${i}">${has?"Пересобрать по шагам":"Сформулировать по шагам"}</button><button class="link" data-quick="${i}">${has?"Править":"Записать сразу"}</button></div></div>`;}).join("")}
-    </div><p class="storage">${storageLine()}</p></div>`;
+    </div></div><p class="storage">${storageLine()}</p></div>`;
   bindBack(()=>{view={name:"home"};render();});
   $app.querySelectorAll("[data-steps]").forEach(b=>b.onclick=()=>{const i=+b.dataset.steps;startFlow("slot",i,i);});
   $app.querySelectorAll("[data-quick]").forEach(b=>b.onclick=()=>{view={name:"quick",slot:+b.dataset.quick};render();});
@@ -513,23 +523,41 @@ async function fontsReady(){try{await Promise.all([document.fonts.load("40px Pra
 function wrap(ctx,text,maxW){const out=[];text=String(text).replace(/(\d) (?=\d{3}(?!\d))/g,"$1\u00A0");for(const para of text.split("\n")){if(!para.trim()){continue;}let line="";for(const w of para.split(/[ \t]+/)){const t=line?line+" "+w:w;if(ctx.measureText(t).width>maxW&&line){out.push(line);line=w;}else line=t;}out.push(line);}return out;}
 async function drawWheel(){
   await fontsReady();
-  const S=store.keys.slots, N=12, W=2000, H=2000, cx=W/2, cy=H/2, R=960, r0=250;
+  const S=store.keys.slots, N=12, W=2000, H=2000, cx=W/2, cy=H/2-10, R=900, r0=240;
   const c=document.createElement("canvas");c.width=W;c.height=H;const ctx=c.getContext("2d");
-  ctx.fillStyle="#F6F0E4";ctx.fillRect(0,0,W,H);
+  const bg=ctx.createRadialGradient(cx,cy,R*0.6,cx,cy,W*0.75);bg.addColorStop(0,"#F8F2E6");bg.addColorStop(1,"#EADFC8");
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  // тень под колесом
+  ctx.save();ctx.shadowColor="rgba(27,38,84,.38)";ctx.shadowBlur=70;ctx.shadowOffsetY=34;
+  ctx.beginPath();ctx.arc(cx,cy,R+34,0,2*Math.PI);ctx.fillStyle="#9C7630";ctx.fill();ctx.restore();
+  // золотой обод с бликом
+  const rim=ctx.createLinearGradient(cx-R,cy-R,cx+R,cy+R);
+  rim.addColorStop(0,"#F3DE9C");rim.addColorStop(.35,"#B48A3A");rim.addColorStop(.6,"#E9CD84");rim.addColorStop(1,"#8A6424");
+  ctx.beginPath();ctx.arc(cx,cy,R+34,0,2*Math.PI);ctx.fillStyle=rim;ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,R+6,0,2*Math.PI);ctx.fillStyle="#7A5A22";ctx.fill();
   const step=2*Math.PI/N, start=-Math.PI/2-step/2;
   for(let i=0;i<N;i++){
     const a0=start+i*step,a1=a0+step,has=!!clean(S[i].text);
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a0,a1);ctx.closePath();
-    ctx.fillStyle=has?(i%2?"#E3E9F7":"#EDF1FA"):(i%2?"#FBF6EC":"#FFFBF3");ctx.fill();
+    const sg=ctx.createRadialGradient(cx,cy,r0,cx,cy,R);
+    if(has){sg.addColorStop(0,"#C9D4EF");sg.addColorStop(.55,i%2?"#E3E9F7":"#EAEFFA");sg.addColorStop(1,"#F7F9FE");}
+    else{sg.addColorStop(0,"#E9DDC2");sg.addColorStop(.55,i%2?"#FAF4E8":"#FFFAF1");sg.addColorStop(1,"#FFFDF8");}
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a0,a1);ctx.closePath();ctx.fillStyle=sg;ctx.fill();
     ctx.strokeStyle="#C9A65E";ctx.lineWidth=3;ctx.stroke();
   }
-  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.lineWidth=8;ctx.strokeStyle="#B48A3A";ctx.stroke();
-  ctx.beginPath();ctx.arc(cx,cy,R-18,0,2*Math.PI);ctx.lineWidth=2;ctx.strokeStyle="#D9C391";ctx.stroke();
-  // центр
-  const g=ctx.createRadialGradient(cx,cy-60,20,cx,cy,r0);g.addColorStop(0,"#34508F");g.addColorStop(1,"#1B2A5A");
-  ctx.beginPath();ctx.arc(cx,cy,r0,0,2*Math.PI);ctx.fillStyle=g;ctx.fill();ctx.lineWidth=6;ctx.strokeStyle="#B48A3A";ctx.stroke();
+  // внутренняя тень по краю, чтобы колесо было вогнутым
+  const ish=ctx.createRadialGradient(cx,cy,R*0.86,cx,cy,R);ish.addColorStop(0,"rgba(90,64,20,0)");ish.addColorStop(1,"rgba(90,64,20,.22)");
+  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fillStyle=ish;ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,R-16,0,2*Math.PI);ctx.lineWidth=2;ctx.strokeStyle="rgba(201,166,94,.8)";ctx.stroke();
+  // центр: медальон со свечением
+  ctx.save();ctx.shadowColor="rgba(238,214,150,.85)";ctx.shadowBlur=60;
+  ctx.beginPath();ctx.arc(cx,cy,r0+14,0,2*Math.PI);ctx.fillStyle=rim;ctx.fill();ctx.restore();
+  const g=ctx.createRadialGradient(cx-60,cy-80,20,cx,cy,r0);g.addColorStop(0,"#4A66AA");g.addColorStop(.6,"#24366F");g.addColorStop(1,"#141F47");
+  ctx.beginPath();ctx.arc(cx,cy,r0,0,2*Math.PI);ctx.fillStyle=g;ctx.fill();
+  const gl=ctx.createLinearGradient(cx,cy-r0,cx,cy);gl.addColorStop(0,"rgba(255,255,255,.18)");gl.addColorStop(1,"rgba(255,255,255,0)");
+  ctx.beginPath();ctx.ellipse(cx,cy-r0*0.45,r0*0.78,r0*0.48,0,0,2*Math.PI);ctx.fillStyle=gl;ctx.fill();
   ctx.textAlign="center";ctx.fillStyle="#EEDFB9";ctx.font="700 30px 'Golos Text', sans-serif";ctx.fillText("КОЛЕСО ЖЕЛАНИЙ",cx,cy-40);
-  ctx.fillStyle="#FFF8EC";ctx.font="120px Prata, serif";ctx.fillText("2027",cx,cy+80);
+  ctx.save();ctx.shadowColor="rgba(0,0,0,.35)";ctx.shadowBlur=12;ctx.shadowOffsetY=4;
+  ctx.fillStyle="#FFF8EC";ctx.font="120px Prata, serif";ctx.fillText("2027",cx,cy+80);ctx.restore();
   ctx.fillStyle="#D9C391";ctx.font="400 24px 'Golos Text', sans-serif";ctx.fillText("Elena Afitciya",cx,cy+150);
   // тексты секторов
   for(let i=0;i<N;i++){
