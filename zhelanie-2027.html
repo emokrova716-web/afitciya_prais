@@ -355,7 +355,7 @@ function renderHome(){
      <h2>Колесо желаний 2027</h2>
      <span class="pill">для «Ключей от 2027»</span>
      <p class="lead">Собери желания по всем 12 жизненным дорогам на одном колесе. С этим колесом приходят на ритуал «Ключи от 2027».</p>
-     <div class="row"><a class="btn" href="kluchi-2027.html">Узнать про «Ключи от 2027»</a><button class="btn ghost" data-keys>Открыть колесо</button></div>
+     <div class="row"><a class="btn" href="https://afitciyamagic.ru/app/kluchi/">Узнать про «Ключи от 2027»</a><button class="btn ghost" data-keys>Открыть колесо</button></div>
     </div>
     <img class="art" src="${ART_WHEEL}" alt="Перламутровое колесо с золотыми секторами">
    </section>
@@ -519,7 +519,7 @@ function renderFinal(){
     ${inArtifact?`<p class="muted small">Здесь печать не работает: страница открыта во встроенном окне. Открой ссылку в браузере, и кнопка «Печать или PDF» появится. Картинку и текст можно сохранить и здесь.</p>`:""}
     ${f.mode==="gift"?`<div class="note small">Если ты участница «Ключей от 2027», это желание можно перенести в сектор «${esc(R.title)}» колеса желаний. <button class="link" data-towheel>Перенести</button></div>`:""}
     <div class="row"><button class="link" data-edit>Изменить ответы</button></div>
-    ${f.mode==="gift"?`<div class="cta-card stack"><p class="cta-t">Одно желание сформулировано. А остальные одиннадцать дорог?</p><p class="small">В ритуале «Ключи от 2027» ты открываешь все 12 дорог на новый год.</p><a class="btn" href="kluchi-2027.html">Узнать про «Ключи от 2027»</a></div>`:""}
+    ${f.mode==="gift"?`<div class="cta-card stack"><p class="cta-t">Одно желание сформулировано. А остальные одиннадцать дорог?</p><p class="small">В ритуале «Ключи от 2027» ты открываешь все 12 дорог на новый год.</p><a class="btn" href="https://afitciyamagic.ru/app/kluchi/">Узнать про «Ключи от 2027»</a></div>`:""}
     <p class="storage">${storageLine()}</p></div>`;
   const ta=$app.querySelector("#res"), st=$app.querySelector("#st"), cb=$app.querySelector("[data-confirm]");
   const show=()=>{ if(f.confirmedAt){st.innerHTML=`<span class="confirmed">✦ Моё желание · ${new Date(f.confirmedAt).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"})}</span>`;cb.textContent="Подтверждено";cb.disabled=true;}
@@ -550,7 +550,7 @@ async function renderKeys(){
     <img class="wheelimg" id="wheel" alt="Колесо желаний на 12 секторов">
     <div class="row"><button class="btn" data-wpng>Скачать колесо</button>${inArtifact?"":`<button class="btn ghost" data-wprint>Печать или PDF</button>`}<button class="btn ghost" data-wtxt ${filled?"":"disabled"}>Текстом</button></div>
     ${inArtifact?`<p class="muted small">Здесь печать не работает: страница открыта во встроенном окне. Открой ссылку в браузере, чтобы распечатать.</p>`:""}
-    <div class="cta-card stack"><p class="cta-t">Колесо готово? Открой все 12 дорог</p><p class="small">Принеси его на ритуал «Ключи от 2027»: онлайн, по фотографии, индивидуально или проведи сама.</p><a class="btn" href="kluchi-2027.html#formats">Выбрать формат</a></div>
+    <div class="cta-card stack"><p class="cta-t">Колесо готово? Открой все 12 дорог</p><p class="small">Принеси его на ритуал «Ключи от 2027»: онлайн, по фотографии, индивидуально или проведи сама.</p><a class="btn" href="https://afitciyamagic.ru/app/kluchi/#formats">Выбрать формат</a></div>
     </div>
     <div class="stack"><h3>Блокнот желаний</h3>
     ${ROADS.map((r,i)=>{const s=S[i],has=!!clean(s.text);return `<div class="entry ${has?"filled":""}"><div class="head"><span class="eyebrow" style="color:var(--emerald)">${i+1}. ${esc(r.title)}</span>${has?`<span class="badge ${s.confirmedAt?"":"blue"}">${s.confirmedAt?"моё":"черновик"}</span>`:""}</div>
