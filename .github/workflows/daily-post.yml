@@ -2,10 +2,8 @@ name: Знак дня в Telegram
 
 on:
   schedule:
-    - cron: "10 21 * * *"  # 00:10 по Москве
-    - cron: "35 21 * * *"  # 00:35, запасной запуск (GitHub иногда пропускает расписание)
-    - cron: "10 22 * * *"  # 01:10, запасной
-    - cron: "50 22 * * *"  # 01:50, запасной
+    - cron: "30 23 * * *"  # 02:30 МСК
+    - cron: "45 23 * * *"  # 02:45 МСК, резерв при задержке
     # Повторной публикации не будет: post.py проверяет daily/posted.log
   workflow_dispatch:
 
@@ -20,11 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Опубликовать карточку на сегодня
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
-        run: python3 daily/post.py
+        run: |
+          if [[ "$(TZ=Europe/Moscow date +%H%M)" < "0230" ]]; then
+            echo "Отправка разрешена с 02:30 МСК"
+            exit 0
+          fi
+          python3 daily/post.py
       - name: Запомнить, что опубликовано
         run: |
           git config user.name "github-actions"
